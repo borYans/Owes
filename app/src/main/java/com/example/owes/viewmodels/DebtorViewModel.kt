@@ -14,6 +14,7 @@ class DebtorViewModel(
     app: Application
 ): AndroidViewModel(app) {
 
+    private var _payments: MutableLiveData<List<Debtor>> = MutableLiveData()
 
     fun addDebtor(debtor: Debtor) {
         viewModelScope.launch {
@@ -21,4 +22,5 @@ class DebtorViewModel(
         }
     }
 
+    fun getAllPayments() = repository.getAllPayments()
 }

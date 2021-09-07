@@ -13,11 +13,14 @@ class DebtorRepository(
     )
 {
 
-    val readAllData: LiveData<List<Debtor>> = debtorDatabase.debtorDao().getAllDebtors()
 
     fun addDebtor(debtor: Debtor) {
         CoroutineScope(Dispatchers.IO).launch {
             debtorDatabase.debtorDao().addDebtor(debtor)
         }
+    }
+
+    fun getAllPayments(): LiveData<List<Debtor>> {
+        return debtorDatabase.debtorDao().getAllDebtors()
     }
 }
