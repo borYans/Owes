@@ -6,20 +6,20 @@ import androidx.lifecycle.*
 import com.example.owes.data.db.Debtor
 import com.example.owes.data.db.DebtorDatabase
 import com.example.owes.repository.DebtorRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DebtorViewModel(
-    private val repository: DebtorRepository,
-    app: Application
-): AndroidViewModel(app) {
+@HiltViewModel
+class DebtorViewModel @Inject constructor(
+    val repository: DebtorRepository
+): ViewModel() {
 
     private var _payments: MutableLiveData<List<Debtor>> = MutableLiveData()
 
     fun addDebtor(debtor: Debtor) {
-        viewModelScope.launch {
-            repository.addDebtor(debtor)
-        }
+            repository.insertDebtor(debtor)
     }
 
     fun getAllPayments() = repository.getAllPayments()

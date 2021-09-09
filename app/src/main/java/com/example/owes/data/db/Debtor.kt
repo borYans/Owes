@@ -9,6 +9,9 @@ data class Debtor(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
 
+    @ColumnInfo(name = "is_owned")
+    val isOwned: Boolean,
+
     @ColumnInfo(name = "debtor_name")
     val personName: String,
 

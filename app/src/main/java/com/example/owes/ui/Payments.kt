@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.owes.R
@@ -14,33 +15,33 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.fragment_payments.*
 import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class Payments : Fragment(R.layout.fragment_payments) {
 
     private val paymentsRecyclerAdapter = PaymentsRecyclerAdapter()
-   // private lateinit var debtorViewModel: DebtorViewModel
+    private val debtorViewModel: DebtorViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //debtorViewModel = ViewModelProvider(requireActivity()).get(DebtorViewModel::class.java)
 
         initializeAdapter()
         initializeAdMobAds()
         listenToAddNewPaymentClick()
-
+        showAllPayments()
     }
 
-  //  private fun showAllPayments() {
-     //   debtorViewModel.getAllPayments().observe(viewLifecycleOwner, { debtors ->
-      //      debtors?.let {
-     //           it.let {
-          //          paymentsRecyclerAdapter.differ.submitList(it)
-          //      }
-        //    }
+    private fun showAllPayments() {
+        debtorViewModel.getAllPayments().observe(viewLifecycleOwner, { debtors ->
+           debtors?.let {
+               it.let {
+                   paymentsRecyclerAdapter.differ.submitList(it)
+               }
+            }
 
-    //    })
-  //  }
+       })
+   }
 
     private fun listenToAddNewPaymentClick() {
         addPaymentButton.setOnClickListener {

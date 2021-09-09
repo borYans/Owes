@@ -7,20 +7,19 @@ import com.example.owes.data.db.DebtorDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DebtorRepository(
-    private val debtorDatabase: DebtorDatabase
+class DebtorRepository @Inject constructor(
+    private val debtorDao: DebtorDao
     )
 {
 
+     fun insertDebtor(debtor: Debtor) {
+         CoroutineScope(Dispatchers.IO).launch {
+             debtorDao.addDebtor(debtor)
+         }
+     }
+    suspend fun deleteDebtor(debtor: Debtor) = debtorDao.deleteDebtor(debtor)
 
-    fun addDebtor(debtor: Debtor) {
-        CoroutineScope(Dispatchers.IO).launch {
-            debtorDatabase.debtorDao().addDebtor(debtor)
-        }
-    }
-
-    fun getAllPayments(): LiveData<List<Debtor>> {
-        return debtorDatabase.debtorDao().getAllDebtors()
-    }
+    fun getAllPayments() = debtorDao.getAllDebtors()
 }
