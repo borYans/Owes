@@ -39,14 +39,16 @@ class PaymentsRecyclerAdapter : RecyclerView.Adapter<PaymentsRecyclerAdapter.Pay
             when(debtor.isOwned) {
                 true -> {
                     imageView.setImageDrawable(holder.itemView.context.resources.getDrawable(R.drawable.money_inside_flow_24)) //check this solution again.
+                    amountMoney.text = "${debtor.amountMoney}"
                 }
                 else -> {
                     imageView.setImageDrawable(holder.itemView.context.resources.getDrawable(R.drawable.ic_money_outside_flow_24)) //check this solution again.
                     amountMoney.setTextColor(holder.itemView.context.resources.getColor(android.R.color.holo_red_light))
+                    amountMoney.text = "- ${debtor.amountMoney}"
+
                 }
             }
             debtorName.text = debtor.personName
-            amountMoney.text = debtor.amountMoney.toString()
             dueDateText.text = debtor.dueDate
 
 
