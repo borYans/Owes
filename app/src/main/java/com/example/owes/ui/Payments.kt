@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.owes.R
 import com.example.owes.data.adapters.PaymentsRecyclerAdapter
 import com.example.owes.viewmodels.DebtorViewModel
@@ -20,10 +23,7 @@ import kotlinx.android.synthetic.main.item_payment.view.*
 class Payments : Fragment(R.layout.fragment_payments) {
 
     private val paymentsRecyclerAdapter = PaymentsRecyclerAdapter()
-    private val debtorViewModel: DebtorViewModel by viewModels()
-
-    private var sumOfIncomeAmount = arrayListOf<Int>()
-    var outcomeAmount = 0
+    private val debtorViewModel: DebtorViewModel by activityViewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,10 +31,30 @@ class Payments : Fragment(R.layout.fragment_payments) {
         initializeAdapter()
         initializeAdMobAds()
 
-
         listenToAddNewPaymentClick()
         showAllPayments()
         showTotalMoney()
+
+        val itemTouchHelpeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position= viewHolder.adapterPosition
+                val debtor = paymentsRecyclerAdapter.differ.currentList[position]
+                debtor.isPayed = true
+                debtorViewModel.updateDebtor(debtor)
+                showTotalMoney()
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelpeCallback)
+        itemTouchHelper.attachToRecyclerView(paymentsRecyclerView)
 
     }
 
@@ -43,12 +63,12 @@ class Payments : Fragment(R.layout.fragment_payments) {
             money?.let {
                 if (money.containsKey("POSITIVE_NUMBER")) {
                     sumOfMoneyAmount.setTextColor(context?.resources?.getColor(android.R.color.holo_green_light)!!)
-                    sumOfMoneyAmount.text = money.getValue("POSITIVE_NUMBER").toString()
+                    sumOfMoneyAmount.text = "+${money.getValue("POSITIVE_NUMBER")}"
                 }
 
                 if (money.containsKey("NEGATIVE_NUMBER")) {
                     sumOfMoneyAmount.setTextColor(context?.resources?.getColor(android.R.color.holo_red_light)!!)
-                    sumOfMoneyAmount.text = "- ${money.getValue("NEGATIVE_NUMBER")}"
+                    sumOfMoneyAmount.text = "-${money.getValue("NEGATIVE_NUMBER")}"
                 }
             }
         })

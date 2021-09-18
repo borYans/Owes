@@ -18,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_add_payment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -34,8 +35,8 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
         handleCheckBoxClicks()
         listenForCalendarInput()
 
-        listenToSaveButton()
 
+        listenToSaveButton()
     }
 
     private fun listenToSaveButton() {
@@ -48,7 +49,8 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
                 amountInputBox.text.toString().toInt(),
                 referenceInputBox.text.toString(),
                 reccuringPaymentCheck.isChecked,
-                dueDate.toString()
+                dueDate.toString(),
+                false                //for adding payment this is set to false as default.
             )
                 debtorViewModel.addDebtor(debtor)
 
@@ -100,7 +102,7 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
         val datePicker = DatePickerDialog.OnDateSetListener { datePicker, YEAR, MONTH, DAY ->
             val calendar = Calendar.getInstance()
             calendar.set(YEAR, MONTH, DAY)
-            dueDate = calendar.time.toString()
+            dueDate = formatDate(calendar.time)
             dueDateButton.text = dueDate  //you can format it a little bit better later.
         }
 
@@ -114,5 +116,9 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
             ).show()
         }
+    }
+    private fun formatDate(date: Date): String {
+        val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        return sdf.format(date)
     }
 }

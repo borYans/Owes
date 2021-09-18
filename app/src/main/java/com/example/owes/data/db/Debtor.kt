@@ -25,5 +25,8 @@ data class Debtor(
     val isRecurringPayment: Boolean,
 
     @ColumnInfo(name = "due_date")
-    val dueDate: String
+    val dueDate: String,
+
+    @ColumnInfo(name = "is_payed")
+    var isPayed: Boolean
 )

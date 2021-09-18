@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DebtorViewModel @Inject constructor(
-    val repository: DebtorRepository
+    private val repository: DebtorRepository
 ): ViewModel() {
 
      private var _payments: MutableLiveData<Map<String, Int>> = MutableLiveData()
@@ -18,7 +18,12 @@ class DebtorViewModel @Inject constructor(
             repository.insertDebtor(debtor)
     }
 
+    fun updateDebtor(debtor: Debtor) {
+        repository.updateDebtor(debtor)
+    }
+
     fun getAllPayments() = repository.getAllPayments()
+    fun getAllPaidDebts() = repository.getAllPaidDebts()
 
     private fun getIncomeMoneyAmount() = sumMoney(repository.getIncomeMoney())
     private fun getOutcomeMoneyAmount() = sumMoney(repository.getOutcomeMoney())
@@ -43,6 +48,8 @@ class DebtorViewModel @Inject constructor(
 
         return _payments
     }
+
+    fun deletePayment(debtor: Debtor) = repository.deleteDebtor(debtor)
 
 
 

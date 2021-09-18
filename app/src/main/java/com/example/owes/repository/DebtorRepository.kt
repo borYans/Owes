@@ -14,16 +14,30 @@ class DebtorRepository @Inject constructor(private val debtorDao: DebtorDao) {
          }
      }
 
-     fun deleteDebtor(debtor: Debtor) = debtorDao.deleteDebtor(debtor)
+     fun deleteDebtor(debtor: Debtor)  {
+         CoroutineScope(Dispatchers.IO).launch {
+             debtorDao.deleteDebtor(debtor)
+         }
+     }
 
-    fun getAllPayments() = debtorDao.getAllDebtors()
+    fun updateDebtor(debtor: Debtor) {
+        CoroutineScope(Dispatchers.IO).launch {
+            debtorDao.updateDebtor(debtor)
+        }
+    }
+
+    fun getAllPayments() = debtorDao.getAllUnpaidDebtors()
+    fun getAllPaidDebts() = debtorDao.getAllPaidDebtors()
+
 
     fun getIncomeMoney(): List<Int> = runBlocking {
         debtorDao.getIncomeAmount()
     }
 
+
     fun getOutcomeMoney(): List<Int> = runBlocking {
         debtorDao.getOutcomeAmount()
     }
+
 
 }
