@@ -35,6 +35,6 @@
     <fragment
         android:id="@+id/paidDebts"
         android:name="com.example.owes.ui.PaidDebts"
-        android:label="PaidDebts" />
+        android:label="Paid Debts" />
 
 </navigation>

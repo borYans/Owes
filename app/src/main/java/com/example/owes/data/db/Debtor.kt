@@ -21,9 +21,6 @@ data class Debtor(
     @ColumnInfo(name = "reference")
     val reference: String,
 
-    @ColumnInfo(name = "is_recurring_payment")
-    val isRecurringPayment: Boolean,
-
     @ColumnInfo(name = "due_date")
     val dueDate: String,
 

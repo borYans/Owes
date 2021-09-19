@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.owes.R
 import com.example.owes.data.adapters.PaymentsRecyclerAdapter
+import com.example.owes.data.db.Debtor
 import com.example.owes.viewmodels.DebtorViewModel
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_payments.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.item_payment.view.*
@@ -25,7 +27,6 @@ class Payments : Fragment(R.layout.fragment_payments) {
     private val paymentsRecyclerAdapter = PaymentsRecyclerAdapter()
     private val debtorViewModel: DebtorViewModel by activityViewModels()
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeAdapter()
@@ -35,7 +36,7 @@ class Payments : Fragment(R.layout.fragment_payments) {
         showAllPayments()
         showTotalMoney()
 
-        val itemTouchHelpeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
+        val itemTouchHelpeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -50,12 +51,12 @@ class Payments : Fragment(R.layout.fragment_payments) {
                 debtor.isPayed = true
                 debtorViewModel.updateDebtor(debtor)
                 showTotalMoney()
+                askPaidConfirmation(debtor)
             }
         }
 
         val itemTouchHelper = ItemTouchHelper(itemTouchHelpeCallback)
         itemTouchHelper.attachToRecyclerView(paymentsRecyclerView)
-
     }
 
     private fun showTotalMoney() {
@@ -104,5 +105,16 @@ class Payments : Fragment(R.layout.fragment_payments) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = paymentsRecyclerAdapter
         }
+    }
+
+    private fun askPaidConfirmation(debtor: Debtor) {
+        Snackbar.make(requireView(), "Added to paid.", Snackbar.LENGTH_LONG).apply {
+            setAction("Undo") {
+                debtor.isPayed = false
+                debtorViewModel.updateDebtor(debtor)
+                showTotalMoney()
+            }
+        }
+            .show()
     }
 }

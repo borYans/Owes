@@ -38,8 +38,8 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:text="+100.00"
-        android:textSize="19sp"
-        android:textStyle="bold"
+        android:textSize="17sp"
+        android:fontFamily="sans-serif"
         android:textColor="@android:color/holo_green_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/debtorName" />

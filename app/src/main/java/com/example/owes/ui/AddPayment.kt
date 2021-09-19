@@ -5,6 +5,7 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -39,32 +40,10 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
         listenToSaveButton()
     }
 
-    private fun listenToSaveButton() {
-        saveButton.setOnClickListener {
-            //need to validate first, this is test purpose
-            val debtor = Debtor(
-                null,
-                oweCheckBox.isChecked,
-                nameInputBox.text.toString(),
-                amountInputBox.text.toString().toInt(),
-                referenceInputBox.text.toString(),
-                reccuringPaymentCheck.isChecked,
-                dueDate.toString(),
-                false                //for adding payment this is set to false as default.
-            )
-                debtorViewModel.addDebtor(debtor)
-
-           Navigation.findNavController(requireView()).navigate(AddPaymentDirections.actionAddPaymentToPayments())
-        }
-
-    }
-
     private fun setInitalCheckBoxesState() {
         owedCheckBox.isChecked = false
         oweCheckBox.isChecked = true
 
-        oneOffCheckButton.isChecked = true
-        reccuringPaymentCheck.isChecked = false
     }
 
     private fun handleCheckBoxClicks() {
@@ -74,29 +53,26 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
         owedCheckBox.setOnClickListener {
             oweCheckBox.isChecked = !owedCheckBox.isChecked
         }
+    }
 
-        oneOffCheckButton.setOnClickListener {
-            reccuringPaymentCheck.isChecked = !oneOffCheckButton.isChecked
-            showDueDateButton()
+    private fun listenToSaveButton() {
+        saveButton.setOnClickListener {
+            //need to validate first, this is test purpose
+            val debtor = Debtor(
+                null,
+                oweCheckBox.isChecked,
+                nameInputBox.text.toString(),
+                amountInputBox.text.toString().toInt(),
+                referenceInputBox.text.toString(),
+                dueDate.toString(),
+                false                //for adding payment this is set to false as default.
+            )
+                debtorViewModel.addDebtor(debtor)
+
+           Navigation.findNavController(requireView()).navigate(AddPaymentDirections.actionAddPaymentToPayments())
         }
-
-        reccuringPaymentCheck.setOnClickListener {
-            oneOffCheckButton.isChecked = !reccuringPaymentCheck.isChecked
-            showCreateScheduleButton()
-        }
-
     }
 
-    private fun showCreateScheduleButton() {
-        createSchedule.visibility = View.VISIBLE
-        dueDateButton.visibility = View.GONE
-    }
-
-    private fun showDueDateButton() {
-        dueDateButton.visibility = View.VISIBLE
-        createSchedule.visibility = View.GONE
-
-    }
 
     private fun listenForCalendarInput() {
         val datePicker = DatePickerDialog.OnDateSetListener { datePicker, YEAR, MONTH, DAY ->
@@ -117,6 +93,7 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
             ).show()
         }
     }
+
     private fun formatDate(date: Date): String {
         val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         return sdf.format(date)
