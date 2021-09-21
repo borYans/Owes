@@ -1,4 +1,4 @@
-package com.example.owes.data.db
+package com.example.owes.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "debtors")
 data class Debtor(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    val id: Long? = null,
 
     @ColumnInfo(name = "is_owned")
     val isOwned: Boolean,

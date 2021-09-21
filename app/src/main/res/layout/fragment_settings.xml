@@ -10,7 +10,7 @@
     tools:context=".ui.Settings">
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switchCompat"
+        android:id="@+id/notificationTogle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Notifications"
@@ -34,7 +34,7 @@
         app:boxStrokeColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchCompat"
+        app:layout_constraintTop_toBottomOf="@+id/notificationTogle"
         app:theme="@style/Theme.AppCompat.Light.DarkActionBar">
 
         <AutoCompleteTextView
@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:text="Save"
         android:textStyle="bold"
-        app:backgroundTint="@android:color/holo_blue_light"
+        app:backgroundTint="@color/main_background_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

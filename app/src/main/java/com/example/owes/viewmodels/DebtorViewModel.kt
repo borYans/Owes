@@ -1,7 +1,7 @@
 package com.example.owes.viewmodels
 
 import androidx.lifecycle.*
-import com.example.owes.data.db.Debtor
+import com.example.owes.data.model.Debtor
 import com.example.owes.repository.DebtorRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -22,8 +22,9 @@ class DebtorViewModel @Inject constructor(
         repository.updateDebtor(debtor)
     }
 
-    fun getAllPayments() = repository.getAllPayments()
-    fun getAllPaidDebts() = repository.getAllPaidDebts()
+     fun getAllPayments() = repository.getAllPayments()
+     fun getAllPaidDebts() = repository.getAllPaidDebts()
+     fun getOneDebtor(debtorName: String) = repository.getSingleDebtor(debtorName)
 
     private fun getIncomeMoneyAmount() = sumMoney(repository.getIncomeMoney())
     private fun getOutcomeMoneyAmount() = sumMoney(repository.getOutcomeMoney())

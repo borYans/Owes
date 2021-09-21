@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_payments_to_paidDebts"
             app:destination="@id/paidDebts" />
+        <action
+            android:id="@+id/action_payments_to_debtorDetail"
+            app:destination="@id/debtorDetail" />
     </fragment>
 
     <fragment
@@ -35,6 +38,18 @@
     <fragment
         android:id="@+id/paidDebts"
         android:name="com.example.owes.ui.PaidDebts"
-        android:label="Paid Debts" />
+        android:label="Paid Debts" >
+        <action
+            android:id="@+id/action_paidDebts_to_debtorDetail"
+            app:destination="@id/debtorDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/debtorDetail"
+        android:name="com.example.owes.ui.DebtorDetail"
+        android:label="Debtor Detail" >
+        <argument
+            android:name="debtor_id"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

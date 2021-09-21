@@ -1,6 +1,6 @@
 package com.example.owes.repository
 
-import com.example.owes.data.db.Debtor
+import com.example.owes.data.model.Debtor
 import com.example.owes.data.db.DebtorDao
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -26,8 +26,12 @@ class DebtorRepository @Inject constructor(private val debtorDao: DebtorDao) {
         }
     }
 
-    fun getAllPayments() = debtorDao.getAllUnpaidDebtors()
-    fun getAllPaidDebts() = debtorDao.getAllPaidDebtors()
+     fun getAllPayments() = debtorDao.getAllUnpaidDebtors()
+     fun getAllPaidDebts() = debtorDao.getAllPaidDebtors()
+
+     fun getSingleDebtor(debtorName: String): Debtor = runBlocking {
+         debtorDao.getSingleDebtor(debtorName)
+     }
 
 
     fun getIncomeMoney(): List<Int> = runBlocking {
