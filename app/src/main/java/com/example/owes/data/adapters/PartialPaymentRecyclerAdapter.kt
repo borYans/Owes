@@ -7,18 +7,20 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.owes.R
-import com.example.owes.data.model.Debtor
+import com.example.owes.data.model.entities.Debtor
+import com.example.owes.data.model.entities.PartialPayment
+import kotlinx.android.synthetic.main.item_partial_payment.view.*
 
 class PartialPaymentRecyclerAdapter: RecyclerView.Adapter<PartialPaymentRecyclerAdapter.PartialPaymentViewHolder>() {
 
 
-    private val differCallback = object: DiffUtil.ItemCallback<Debtor>() {
-        override fun areItemsTheSame(oldItem: Debtor, newItem: Debtor): Boolean {
-            return oldItem.id == newItem.id
+    private val differCallback = object: DiffUtil.ItemCallback<PartialPayment>() {
+        override fun areItemsTheSame(oldItem: PartialPayment, newItem: PartialPayment): Boolean {
+            return oldItem.paymentId == newItem.paymentId
         }
 
-        override fun areContentsTheSame(oldItem: Debtor, newItem: Debtor): Boolean {
-            return oldItem.id === newItem.id
+        override fun areContentsTheSame(oldItem: PartialPayment, newItem: PartialPayment): Boolean {
+            return oldItem.paymentId === newItem.paymentId
         }
     }
 
@@ -34,7 +36,8 @@ class PartialPaymentRecyclerAdapter: RecyclerView.Adapter<PartialPaymentRecycler
     override fun onBindViewHolder(holder: PartialPaymentViewHolder, position: Int) {
         val partialPayment = partialPDiffer.currentList[position]
         holder.itemView.apply {
-
+            datePartialPayment.text = partialPayment.date
+            amountPartialPayment.text = partialPayment.amount.toString()
         }
     }
 

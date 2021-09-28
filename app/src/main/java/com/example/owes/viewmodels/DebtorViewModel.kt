@@ -1,7 +1,8 @@
 package com.example.owes.viewmodels
 
 import androidx.lifecycle.*
-import com.example.owes.data.model.Debtor
+import com.example.owes.data.model.entities.Debtor
+import com.example.owes.data.model.entities.PartialPayment
 import com.example.owes.repository.DebtorRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -18,6 +19,10 @@ class DebtorViewModel @Inject constructor(
             repository.insertDebtor(debtor)
     }
 
+    fun addPartialPayment(partialPayment: PartialPayment) {
+        repository.insertPPayment(partialPayment)
+    }
+
     fun updateDebtor(debtor: Debtor) {
         repository.updateDebtor(debtor)
     }
@@ -25,6 +30,8 @@ class DebtorViewModel @Inject constructor(
      fun getAllPayments() = repository.getAllPayments()
      fun getAllPaidDebts() = repository.getAllPaidDebts()
      fun getOneDebtor(debtorName: String) = repository.getSingleDebtor(debtorName)
+     fun getPartialPaymentsForDebtor(debtorName: String) = repository.getPPayments(debtorName)
+
 
     private fun getIncomeMoneyAmount() = sumMoney(repository.getIncomeMoney())
     private fun getOutcomeMoneyAmount() = sumMoney(repository.getOutcomeMoney())
@@ -51,6 +58,7 @@ class DebtorViewModel @Inject constructor(
     }
 
     fun deletePayment(debtor: Debtor) = repository.deleteDebtor(debtor)
+    fun deletePPayment(partialPay: PartialPayment) = repository.deletepPayment(partialPay)
 
 
 

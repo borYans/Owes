@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.owes.R
 import com.example.owes.data.adapters.PaymentsRecyclerAdapter
-import com.example.owes.data.model.Debtor
+import com.example.owes.data.model.entities.Debtor
 import com.example.owes.utils.DebtorOnClickListener
 import com.example.owes.viewmodels.DebtorViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -52,9 +52,18 @@ class PaidDebts : Fragment(R.layout.fragment_paid_debts), DebtorOnClickListener 
     private fun showAllPaidDebts() {
         debtorViewModel.getAllPaidDebts().observe(viewLifecycleOwner, { paidDebts ->
             paidDebts?.let {
-                paymentsRecyclerAdapter.differ.submitList(it)
+                checkPaidDebts(it)
             }
         })
+    }
+
+    private fun checkPaidDebts(paidDebts:List<Debtor>) {
+        if(paidDebts.isEmpty()) {
+            noPaidDebtsTxt.visibility = View.VISIBLE
+        } else {
+            noPaidDebtsTxt.visibility = View.GONE
+            paymentsRecyclerAdapter.differ.submitList(paidDebts)
+        }
     }
 
     private fun initalizeAdapter() {

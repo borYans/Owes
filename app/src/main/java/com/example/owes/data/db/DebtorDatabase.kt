@@ -2,9 +2,10 @@ package com.example.owes.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.owes.data.model.Debtor
+import com.example.owes.data.model.entities.Debtor
+import com.example.owes.data.model.entities.PartialPayment
 
-@Database(entities = [Debtor::class], version = 1, exportSchema = false)
+@Database(entities = [Debtor::class, PartialPayment::class], version = 1, exportSchema = false)
 abstract class DebtorDatabase: RoomDatabase() {
 
     abstract fun debtorDao(): DebtorDao

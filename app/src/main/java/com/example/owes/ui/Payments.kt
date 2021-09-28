@@ -5,12 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.owes.R
 import com.example.owes.data.adapters.PaymentsRecyclerAdapter
-import com.example.owes.data.model.Debtor
+import com.example.owes.data.model.entities.Debtor
 import com.example.owes.utils.DebtorOnClickListener
 import com.example.owes.viewmodels.DebtorViewModel
 import com.google.android.gms.ads.AdRequest
@@ -30,31 +28,20 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
         initializeAdapter()
         initializeAdMobAds()
 
+
         listenToAddNewPaymentClick()
         showAllPayments()
         showTotalMoney()
 
-        val itemTouchHelpeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT){
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return true
-            }
+    }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position= viewHolder.adapterPosition
-                val debtor = paymentsRecyclerAdapter.differ.currentList[position]
-                debtor.isPayed = true
-                debtorViewModel.updateDebtor(debtor)
-                showTotalMoney()
-                askPaidConfirmation(debtor)
-            }
+    private fun checkPaymentsList(payments: List<Debtor>) {
+        if (payments.isEmpty()) {
+            noPaymentsInfoTxt.visibility = View.VISIBLE
+        } else {
+            noPaymentsInfoTxt.visibility = View.GONE
+            paymentsRecyclerAdapter.differ.submitList(payments)
         }
-
-        val itemTouchHelper = ItemTouchHelper(itemTouchHelpeCallback)
-        itemTouchHelper.attachToRecyclerView(paymentsRecyclerView)
     }
 
     private fun showTotalMoney() {
@@ -73,17 +60,15 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
         })
     }
 
-
     private fun showAllPayments() {
         debtorViewModel.getAllPayments().observe(viewLifecycleOwner, { debtors ->
            debtors?.let {
                it.let {
-                   paymentsRecyclerAdapter.differ.submitList(it)
+                   checkPaymentsList(it)
                }
             }
-
        })
-   }
+    }
 
     private fun listenToAddNewPaymentClick() {
         addPaymentButton.setOnClickListener {

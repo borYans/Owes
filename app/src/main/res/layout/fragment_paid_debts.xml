@@ -7,6 +7,14 @@
         android:orientation="vertical"
         android:padding="12dp">
 
+        <TextView
+            android:id="@+id/noPaidDebtsTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="No paid debts on the list."
+            android:gravity="center" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/paidRecyclerView"
             android:layout_width="match_parent"

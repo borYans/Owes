@@ -8,14 +8,27 @@
     tools:context=".ui.Payments">
 
     <TextView
+        android:id="@+id/noPaymentsInfoTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="No payments on the list."
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/addPaymentButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:drawableEnd="@drawable/ic_add_30"
         android:drawableTint="@color/main_background_color"
-        android:text="Add payment"
         android:padding="8dp"
+        android:text="Add payment"
         android:textColor="@color/main_background_color"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,8 +52,8 @@
         android:id="@+id/totalLinearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="12dp"
         android:orientation="horizontal"
+        android:padding="12dp"
         app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -58,8 +71,8 @@
             android:id="@+id/sumOfMoneyAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="end"
             android:fontFamily="sans-serif"
+            android:gravity="end"
             android:text="3600"
             android:textColor="@color/black"
             android:textSize="23sp"

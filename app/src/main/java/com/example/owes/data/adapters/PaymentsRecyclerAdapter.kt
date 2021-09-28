@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.owes.R
-import com.example.owes.data.model.Debtor
+import com.example.owes.data.model.entities.Debtor
 import com.example.owes.utils.DebtorOnClickListener
 import kotlinx.android.synthetic.main.item_payment.view.*
 
@@ -20,7 +20,7 @@ class PaymentsRecyclerAdapter(
 
     private val differCallback = object: DiffUtil.ItemCallback<Debtor>() {
         override fun areItemsTheSame(oldItem: Debtor, newItem: Debtor): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.personName == newItem.personName
         }
 
         override fun areContentsTheSame(oldItem: Debtor, newItem: Debtor): Boolean {
@@ -41,13 +41,13 @@ class PaymentsRecyclerAdapter(
         holder.itemView.apply {
             when(debtor.isOwned) {
                 true -> {
-                    imageView.setImageDrawable(holder.itemView.context.resources.getDrawable(R.drawable.money_inside_flow_24)) //check this solution again.
-                    amountMoney.text = "+$${debtor.amountMoney}"
+                    imageView.setImageDrawable(holder.itemView.context.resources.getDrawable(R.drawable.ic_baseline_arrow_circle_right_24)) //check this solution again.
+                    amountMoney.text = "+$${debtor.totalAmountMoney}"
                 }
                 else -> {
                     imageView.setImageDrawable(holder.itemView.context.resources.getDrawable(R.drawable.ic_baseline_arrow_circle_left_24)) //check this solution again.
                     amountMoney.setTextColor(holder.itemView.context.resources.getColor(android.R.color.holo_red_light))
-                    amountMoney.text = "-$${debtor.amountMoney}"
+                    amountMoney.text = "-$${debtor.totalAmountMoney}"
                 }
             }
             debtorName.text = debtor.personName

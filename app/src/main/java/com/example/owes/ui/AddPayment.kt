@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.owes.R
-import com.example.owes.data.model.Debtor
+import com.example.owes.data.model.entities.Debtor
 import com.example.owes.viewmodels.DebtorViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_payment.*
@@ -52,12 +52,13 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
         saveButton.setOnClickListener {
             //need to validate first, this is test purpose
             val debtor = Debtor(
-                null,
                 oweCheckBox.isChecked,
                 nameInputBox.text.toString(),
                 amountInputBox.text.toString().toInt(),
+                amountInputBox.text.toString().toInt(), //remaining amount of money.
                 referenceInputBox.text.toString(),
                 dueDate.toString(),
+                null,
                 false                //for adding payment this is set to false as default.
             )
                 debtorViewModel.addDebtor(debtor)
