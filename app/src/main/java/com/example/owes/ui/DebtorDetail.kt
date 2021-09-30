@@ -55,6 +55,7 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
         listenToSaveBtn()
 
 
+
         val itemTouchHelpeCallback =
             object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
                 override fun onMove(
