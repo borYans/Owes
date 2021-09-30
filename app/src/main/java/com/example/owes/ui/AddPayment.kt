@@ -8,10 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import com.example.owes.R
 import com.example.owes.data.db.Debtor
 import com.example.owes.viewmodels.DebtorViewModel
 import com.google.android.material.button.MaterialButtonToggleGroup
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_payment.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,15 +21,15 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 
+@AndroidEntryPoint
 class AddPayment : Fragment(R.layout.fragment_add_payment) {
 
     private var dueDate: String? = null
 
-    private lateinit var debtorViewModel: DebtorViewModel
+    private val debtorViewModel: DebtorViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        debtorViewModel = (activity as MainActivity).debtorViewModel
         setInitalCheckBoxesState()
         handleCheckBoxClicks()
         listenForCalendarInput()
@@ -41,6 +43,7 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
             //need to validate first, this is test purpose
             val debtor = Debtor(
                 null,
+                oweCheckBox.isChecked,
                 nameInputBox.text.toString(),
                 amountInputBox.text.toString().toInt(),
                 referenceInputBox.text.toString(),
@@ -49,10 +52,10 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
             )
                 debtorViewModel.addDebtor(debtor)
 
+           Navigation.findNavController(requireView()).navigate(AddPaymentDirections.actionAddPaymentToPayments())
         }
 
     }
-
 
     private fun setInitalCheckBoxesState() {
         owedCheckBox.isChecked = false

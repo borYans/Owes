@@ -1,23 +1,29 @@
 package com.example.owes.repository
 
-import androidx.lifecycle.LiveData
 import com.example.owes.data.db.Debtor
 import com.example.owes.data.db.DebtorDao
-import com.example.owes.data.db.DebtorDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class DebtorRepository(
-    private val debtorDatabase: DebtorDatabase
-    )
-{
+class DebtorRepository @Inject constructor(private val debtorDao: DebtorDao) {
 
-    val readAllData: LiveData<List<Debtor>> = debtorDatabase.debtorDao().getAllDebtors()
 
-    fun addDebtor(debtor: Debtor) {
-        CoroutineScope(Dispatchers.IO).launch {
-            debtorDatabase.debtorDao().addDebtor(debtor)
-        }
+     fun insertDebtor(debtor: Debtor) {
+         CoroutineScope(Dispatchers.IO).launch {
+             debtorDao.addDebtor(debtor)
+         }
+     }
+
+     fun deleteDebtor(debtor: Debtor) = debtorDao.deleteDebtor(debtor)
+
+    fun getAllPayments() = debtorDao.getAllDebtors()
+
+    fun getIncomeMoney(): List<Int> = runBlocking {
+        debtorDao.getIncomeAmount()
     }
+
+    fun getOutcomeMoney(): List<Int> = runBlocking {
+        debtorDao.getOutcomeAmount()
+    }
+
 }
