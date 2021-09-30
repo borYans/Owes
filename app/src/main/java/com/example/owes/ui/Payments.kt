@@ -5,10 +5,14 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.owes.R
 import com.example.owes.data.adapters.PaymentsRecyclerAdapter
 import com.example.owes.data.model.entities.Debtor
+import com.example.owes.utils.Constants.NEGATIVE_NUMBER
+import com.example.owes.utils.Constants.POSITIVE_NUMBER
 import com.example.owes.utils.DebtorOnClickListener
 import com.example.owes.utils.OwesSharedPrefs.initSharedPrefs
 import com.example.owes.utils.OwesSharedPrefs.readFromPrefs
@@ -17,6 +21,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_paid_debts.*
 import kotlinx.android.synthetic.main.fragment_payments.*
 
 @AndroidEntryPoint
@@ -36,28 +41,49 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
         showAllPayments()
         showTotalMoney()
 
+        val itemTouchHelpeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position= viewHolder.adapterPosition
+                val debtor = paymentsRecyclerAdapter.differ.currentList[position]
+                debtorViewModel.deletePayment(debtor)
+                askDeleteConfirmation(debtor)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelpeCallback)
+        itemTouchHelper.attachToRecyclerView(paymentsRecyclerView)
+
     }
 
-    private fun checkPaymentsList(payments: List<Debtor>) {
-        if (payments.isEmpty()) {
-            noPaymentsInfoTxt.visibility = View.VISIBLE
-        } else {
-            noPaymentsInfoTxt.visibility = View.GONE
-            paymentsRecyclerAdapter.differ.submitList(payments)
+    private fun askDeleteConfirmation(debtor: Debtor) {
+        Snackbar.make(requireView(), getString(R.string.payment_deleted), Snackbar.LENGTH_LONG).apply {
+            setAction(getString(R.string.undo)) {
+                debtorViewModel.addDebtor(debtor)
+            }
         }
+            .show()
     }
+
 
     private fun showTotalMoney() {
         debtorViewModel.calculateTotal().observe(viewLifecycleOwner, { money ->
             money?.let {
-                if (money.containsKey("POSITIVE_NUMBER")) {
+                if (money.containsKey(POSITIVE_NUMBER)) {
                     sumOfMoneyAmount.setTextColor(context?.resources?.getColor(android.R.color.holo_green_dark)!!)
-                    sumOfMoneyAmount.text = "+${readFromPrefs("string", "")}${money.getValue("POSITIVE_NUMBER")}"
+                    sumOfMoneyAmount.text = "+${readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${money.getValue(POSITIVE_NUMBER)}"
                 }
 
-                if (money.containsKey("NEGATIVE_NUMBER")) {
+                if (money.containsKey(NEGATIVE_NUMBER)) {
                     sumOfMoneyAmount.setTextColor(context?.resources?.getColor(android.R.color.holo_red_dark)!!)
-                    sumOfMoneyAmount.text = "-${readFromPrefs("string", "")}${money.getValue("NEGATIVE_NUMBER")}"
+                    sumOfMoneyAmount.text = "-${readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${money.getValue(NEGATIVE_NUMBER)}"
                 }
             }
         })
@@ -66,11 +92,18 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
     private fun showAllPayments() {
         debtorViewModel.getAllPayments().observe(viewLifecycleOwner, { debtors ->
            debtors?.let {
-               it.let {
-                   checkPaymentsList(it)
-               }
-            }
+               validatePaymentsList(it)
+               paymentsRecyclerAdapter.differ.submitList(it)
+           }
        })
+    }
+
+    private fun validatePaymentsList(it: List<Debtor>) {
+        if (it.isEmpty()) {
+            noPaymentsInfoTxt.visibility = View.VISIBLE
+        } else {
+            noPaymentsInfoTxt.visibility = View.GONE
+        }
     }
 
     private fun listenToAddNewPaymentClick() {

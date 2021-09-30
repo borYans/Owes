@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.example.owes.R
+import com.example.owes.utils.Constants.NOTIFICATION_STATUS
 import com.example.owes.utils.OwesSharedPrefs.readFromPrefs
 import com.example.owes.utils.OwesSharedPrefs.saveBooleanToSharedPrefs
 import com.example.owes.utils.OwesSharedPrefs.saveStringToSharedPrefs
@@ -30,8 +31,8 @@ class Settings : Fragment(R.layout.fragment_settings) {
 
     private fun listenSaveButton() {
         saveSettingsBtn.setOnClickListener {
-            saveBooleanToSharedPrefs(notificationTogle.isChecked)
-            saveStringToSharedPrefs(currencyInputLayout.editText?.text.toString())
+            saveBooleanToSharedPrefs(NOTIFICATION_STATUS,notificationTogle.isChecked)
+            saveStringToSharedPrefs(getString(R.string.CURRENCY),currencyInputLayout.editText?.text.toString())
             Log.d("SETTINGS", "SHARED PREFERENCES: ${readFromPrefs("string", "")}")
         }
     }

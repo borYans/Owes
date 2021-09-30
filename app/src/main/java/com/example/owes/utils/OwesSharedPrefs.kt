@@ -13,18 +13,18 @@ object OwesSharedPrefs {
         sharedPrefs = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
     }
 
-    fun saveBooleanToSharedPrefs(isOn: Boolean) {
+    fun saveBooleanToSharedPrefs(key: String,isOn: Boolean) {
         val editor = sharedPrefs.edit()
         with(editor) {
-            putBoolean("isSwitched", isOn)
+            putBoolean(key, isOn)
             apply()
         }
     }
 
-    fun saveStringToSharedPrefs(string: String) {
+    fun saveStringToSharedPrefs(key: String, value: String) {
         val editor = sharedPrefs.edit()
         with(editor) {
-            putString("string", string)
+            putString(key, value)
             apply()
         }
     }

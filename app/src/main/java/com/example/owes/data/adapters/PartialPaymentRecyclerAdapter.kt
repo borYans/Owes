@@ -37,7 +37,7 @@ class PartialPaymentRecyclerAdapter: RecyclerView.Adapter<PartialPaymentRecycler
 
     override fun onBindViewHolder(holder: PartialPaymentViewHolder, position: Int) {
         initSharedPrefs(holder.itemView.context)
-        val curr = readFromPrefs("string", "")
+        val curr = readFromPrefs(holder.itemView.context.getString(R.string.CURRENCY), holder.itemView.context.getString(R.string.DOLLAR))
         val partialPayment = partialPDiffer.currentList[position]
         holder.itemView.apply {
             datePartialPayment.text = partialPayment.date

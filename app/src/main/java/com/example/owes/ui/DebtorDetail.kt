@@ -150,15 +150,15 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
             0
         )
         markAsPaidBtn.setTextColor(BLACK)
-        markAsPaidBtn.text = "Mark as paid"
+        markAsPaidBtn.text = getString(R.string.mark_as_paid)
         partialPaymentBtn.visibility = View.VISIBLE
     }
 
     private fun retrieveRemainingAmount() {
         remainingMoney = debtor.remainingAmountMoney
         totalPaidMoney = debtor.totalAmountMoney
-        remainingMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs("string", "")}${remainingMoney}"
-        totalMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs("string", "")}$totalPaidMoney"
+        remainingMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${remainingMoney}"
+        totalMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}$totalPaidMoney"
     }
 
     private fun listenToMarkAsPaidBtn() {
@@ -190,8 +190,8 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     private fun clearRemainingAmount() {
         totalPaidMoney = debtor.totalAmountMoney + debtor.remainingAmountMoney
         remainingMoney = 0
-        remainingMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs("string", "")}$remainingMoney"
-        totalMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs("string", "")}${totalPaidMoney}"
+        remainingMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}$remainingMoney"
+        totalMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${totalPaidMoney}"
     }
 
     private fun setPaidButtonState() {
@@ -229,9 +229,9 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
                 debtorNameTxtDetail.text = it.personName
                 referenceDetailTxt.text = it.reference
                 totalMoneyDetail.text =
-                    "${OwesSharedPrefs.readFromPrefs("string", "")}${debtor.totalAmountMoney}"
+                    "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${debtor.totalAmountMoney}"
                 remainingMoneyDetail.text =
-                    "${OwesSharedPrefs.readFromPrefs("string", "")}${debtor.remainingAmountMoney}"
+                    "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${debtor.remainingAmountMoney}"
             }
         })
     }

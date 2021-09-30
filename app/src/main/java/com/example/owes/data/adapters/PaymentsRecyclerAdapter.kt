@@ -40,7 +40,7 @@ class PaymentsRecyclerAdapter(
 
     override fun onBindViewHolder(holder: PaymentsViewHolder, position: Int) {
         initSharedPrefs(holder.itemView.context)
-        val curr = readFromPrefs("string", " ")
+        val curr = readFromPrefs(holder.itemView.context.getString(R.string.CURRENCY), holder.itemView.context.getString(R.string.DOLLAR))
 
         val debtor = differ.currentList[position]
 
@@ -59,7 +59,7 @@ class PaymentsRecyclerAdapter(
                 }
             }
             debtorName.text = debtor.personName
-            dueDateText.text = "Due date: ${debtor.dueDate}"
+            dueDateText.text = "${context.getString(R.string.due_date)}  ${debtor.dueDate}"
 
             holder.itemView.setOnClickListener{
                 debtorOnClickListener.onDebtorClick(debtor.personName)

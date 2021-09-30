@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.example.owes.R
 import com.example.owes.data.model.entities.Debtor
+import com.example.owes.utils.Constants.SDF_PATTERN
 import com.example.owes.viewmodels.DebtorViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_payment.*
@@ -89,7 +90,7 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
     }
 
     private fun formatDate(date: Date): String {
-        val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        val sdf = SimpleDateFormat(SDF_PATTERN, Locale.getDefault())
         return sdf.format(date)
     }
 }

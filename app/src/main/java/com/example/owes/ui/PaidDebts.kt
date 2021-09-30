@@ -52,17 +52,17 @@ class PaidDebts : Fragment(R.layout.fragment_paid_debts), DebtorOnClickListener 
     private fun showAllPaidDebts() {
         debtorViewModel.getAllPaidDebts().observe(viewLifecycleOwner, { paidDebts ->
             paidDebts?.let {
-                checkPaidDebts(it)
+                validatePaidDebts(it)
+                paymentsRecyclerAdapter.differ.submitList(paidDebts)
             }
         })
     }
 
-    private fun checkPaidDebts(paidDebts:List<Debtor>) {
+    private fun validatePaidDebts(paidDebts:List<Debtor>) {
         if(paidDebts.isEmpty()) {
             noPaidDebtsTxt.visibility = View.VISIBLE
         } else {
             noPaidDebtsTxt.visibility = View.GONE
-            paymentsRecyclerAdapter.differ.submitList(paidDebts)
         }
     }
 

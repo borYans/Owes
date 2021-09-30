@@ -2,7 +2,7 @@ package com.example.owes.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.owes.data.Constants.DEBTOR_DATABASE_NAME
+import com.example.owes.utils.Constants.DEBTOR_DATABASE_NAME
 import com.example.owes.data.db.DebtorDatabase
 import dagger.Module
 import dagger.Provides
