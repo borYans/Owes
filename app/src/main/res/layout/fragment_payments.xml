@@ -64,8 +64,7 @@
             android:layout_height="wrap_content"
             android:text="Total:"
             android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/sumOfMoneyAmount"
@@ -73,10 +72,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:gravity="end"
-            android:text="3600"
+            android:text="0"
             android:textColor="@color/black"
-            android:textSize="23sp"
-            android:textStyle="bold" />
+            android:textSize="23sp" />
 
 
     </LinearLayout>

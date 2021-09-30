@@ -61,7 +61,7 @@
     <fragment
         android:id="@+id/partialPayments"
         android:name="com.example.owes.ui.PartialPayments"
-        android:label="PartialPayments" >
+        android:label="Partial Payment" >
         <action
             android:id="@+id/action_partialPayments_to_debtorDetail"
             app:destination="@id/debtorDetail" />

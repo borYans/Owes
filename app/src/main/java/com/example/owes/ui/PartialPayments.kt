@@ -32,7 +32,7 @@ class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
                 partialAmountMoneyInput.text.toString().toInt(),
                 debtorName!!
             )
-            debtorViewModel.addPartialPayment(partialPayment = pPayment)
+            debtorViewModel.addPartialPayment(pPayment)
 
             debtor.remainingAmountMoney = debtor.remainingAmountMoney - partialAmountMoneyInput.text.toString().toInt()
             debtor.totalAmountMoney += partialAmountMoneyInput.text.toString().toInt()
@@ -40,7 +40,6 @@ class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
 
             Navigation.findNavController(requireView()).navigate(PartialPaymentsDirections.actionPartialPaymentsToDebtorDetail(debtorName!!))
         }
-
 
 
     }

@@ -4,6 +4,8 @@ import androidx.lifecycle.*
 import com.example.owes.data.model.entities.Debtor
 import com.example.owes.data.model.entities.PartialPayment
 import com.example.owes.repository.DebtorRepository
+import com.example.owes.utils.Constants.NEGATIVE_NUMBER
+import com.example.owes.utils.Constants.POSITIVE_NUMBER
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -50,9 +52,9 @@ class DebtorViewModel @Inject constructor(
          val negativeNumber = getOutcomeMoneyAmount() - getIncomeMoneyAmount()
 
         if (getIncomeMoneyAmount() >= getOutcomeMoneyAmount()) {
-            _payments.postValue(mapOf("POSITIVE_NUMBER" to (positiveNumber)))
+            _payments.postValue(mapOf(POSITIVE_NUMBER to (positiveNumber)))
         } else {
-            _payments.postValue(mapOf("NEGATIVE_NUMBER" to (negativeNumber)))
+            _payments.postValue(mapOf(NEGATIVE_NUMBER to (negativeNumber)))
         }
 
         return _payments

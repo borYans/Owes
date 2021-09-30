@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -67,14 +68,19 @@ class PaidDebts : Fragment(R.layout.fragment_paid_debts), DebtorOnClickListener 
     }
 
     private fun initalizeAdapter() {
+        val dividerItemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         paidRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = paymentsRecyclerAdapter
+            addItemDecoration(dividerItemDecoration)
         }
     }
 
     private fun askDeleteConfirmation(debtor: Debtor) {
         Snackbar.make(requireView(), "Payment deleted.", Snackbar.LENGTH_LONG).apply {
+            setBackgroundTint(resources.getColor(android.R.color.holo_red_light))
+            setTextColor(resources.getColor(R.color.black))
+            setActionTextColor(resources.getColor(R.color.black))
             setAction("Undo") {
                 debtorViewModel.addDebtor(debtor)
             }

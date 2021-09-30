@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,7 +40,6 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     //screenshot of the money variables
     private var totalPaidMoney: Int = 0
     private var remainingMoney: Int = 0
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,16 +82,29 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
 
     private fun updateDebtor(partialAmount: Int) {
         debtor.apply {
-            totalAmountMoney -= partialAmount
-            remainingAmountMoney += partialAmount
+            val total = totalAmountMoney - partialAmount
+            val remaining = remainingAmountMoney + partialAmount
+            if (total >= 0 && remaining >= 0) {
+                totalAmountMoney -= partialAmount
+                remainingAmountMoney += partialAmount
+            }
         }
         debtorViewModel.updateDebtor(debtor)
     }
 
     private fun askDeleteConfirmation(ppayment: PartialPayment) {
         Snackbar.make(requireView(), "Payment deleted.", Snackbar.LENGTH_LONG).apply {
+            setBackgroundTint(resources.getColor(android.R.color.holo_red_light))
+            setTextColor(resources.getColor(R.color.black))
+            setActionTextColor(resources.getColor(R.color.black))
             setAction("Undo") {
-                debtorViewModel.addPartialPayment(partialPayment = ppayment)
+                debtorViewModel.addPartialPayment(ppayment)
+
+                debtor.apply {
+                    remainingAmountMoney -= ppayment.amount
+                    totalAmountMoney += ppayment.amount
+                }
+                debtorViewModel.updateDebtor(debtor)
             }
         }
             .show()
@@ -111,7 +124,7 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     private fun listenToSaveBtn() {
         saveButtonDetail.setOnClickListener {
             debtor.isPayed = isPaidBtnClicked
-            if(debtor.isPayed) {
+            if (debtor.isPayed) {
                 debtor.apply {
                     totalAmountMoney = totalPaidMoney
                     remainingAmountMoney = remainingMoney
@@ -120,7 +133,8 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
                 debtorViewModel.updateDebtor(debtor)
             }
 
-            Navigation.findNavController(requireView()).navigate(DebtorDetailDirections.actionDebtorDetailToPaidDebts())
+            Navigation.findNavController(requireView())
+                .navigate(DebtorDetailDirections.actionDebtorDetailToPaidDebts())
         }
     }
 
@@ -177,8 +191,7 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
                 clearRemainingAmount()
                 setPaidButtonState()
                 partialPaymentRecycler.visibility = View.GONE
-                markAsPaidBtn.text =
-                    "Paid on ${convertDateToSimpleFormatString(Calendar.getInstance().time)} | Unpaid ->"
+                markAsPaidBtn.text = "Paid on ${convertDateToSimpleFormatString(Calendar.getInstance().time)} | Unpaid ->"
                 saveButtonDetail.apply {
                     isEnabled = true
                     setBackgroundColor(resources.getColor(R.color.main_background_color))
@@ -224,16 +237,28 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
                 debtor = it
                 totalPaidMoney = it.totalAmountMoney
                 remainingMoney = it.remainingAmountMoney
+                listenForZeroRemainingMoney()
                 checkPaidState()
                 setPaymentImageResource()
                 debtorNameTxtDetail.text = it.personName
                 referenceDetailTxt.text = it.reference
-                totalMoneyDetail.text =
-                    "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${debtor.totalAmountMoney}"
-                remainingMoneyDetail.text =
-                    "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${debtor.remainingAmountMoney}"
+                totalMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${debtor.totalAmountMoney}"
+                remainingMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${debtor.remainingAmountMoney}"
             }
         })
+    }
+
+    private fun listenForZeroRemainingMoney() {
+        if (remainingMoney == 0) {
+            isPaidBtnClicked = true
+            setPaidButtonState()
+            partialPaymentRecycler.visibility = View.GONE
+            markAsPaidBtn.text = "Paid on ${convertDateToSimpleFormatString(Calendar.getInstance().time)} | Unpaid ->"
+            saveButtonDetail.apply {
+                isEnabled = true
+                setBackgroundColor(resources.getColor(R.color.main_background_color))
+            }
+        }
     }
 
     private fun setPaymentImageResource() {
@@ -245,9 +270,11 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     }
 
     private fun setUpRecyclerView() {
+        val dividerItemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         partialPaymentRecycler.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = partialPaymentRecyclerAdapter
+            addItemDecoration(dividerItemDecoration)
         }
     }
 

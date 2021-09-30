@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,10 +37,9 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
         initializeAdapter()
         initializeAdMobAds()
 
-
         listenToAddNewPaymentClick()
         showAllPayments()
-        showTotalMoney()
+
 
         val itemTouchHelpeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
             override fun onMove(
@@ -65,6 +65,9 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
 
     private fun askDeleteConfirmation(debtor: Debtor) {
         Snackbar.make(requireView(), getString(R.string.payment_deleted), Snackbar.LENGTH_LONG).apply {
+            setBackgroundTint(resources.getColor(android.R.color.holo_red_light))
+            setTextColor(resources.getColor(R.color.black))
+            setActionTextColor(resources.getColor(R.color.black))
             setAction(getString(R.string.undo)) {
                 debtorViewModel.addDebtor(debtor)
             }
@@ -94,6 +97,7 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
            debtors?.let {
                validatePaymentsList(it)
                paymentsRecyclerAdapter.differ.submitList(it)
+               showTotalMoney()
            }
        })
     }
@@ -120,9 +124,11 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
     }
 
     private fun initializeAdapter() {
+        val dividerItemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         paymentsRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = paymentsRecyclerAdapter
+            addItemDecoration(dividerItemDecoration)
         }
     }
 
