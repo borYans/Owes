@@ -1,33 +1,33 @@
 package com.example.owes.ui
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.owes.R
 import com.example.owes.data.adapters.PaymentsRecyclerAdapter
+import com.example.owes.data.model.entities.Debtor
+import com.example.owes.utils.DebtorOnClickListener
+import com.example.owes.utils.OwesSharedPrefs.initSharedPrefs
+import com.example.owes.utils.OwesSharedPrefs.readFromPrefs
 import com.example.owes.viewmodels.DebtorViewModel
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
-import kotlinx.android.synthetic.main.fragment_payments.*
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.item_payment.view.*
+import kotlinx.android.synthetic.main.fragment_payments.*
 
 @AndroidEntryPoint
-class Payments : Fragment(R.layout.fragment_payments) {
+class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
 
-    private val paymentsRecyclerAdapter = PaymentsRecyclerAdapter()
-    private val debtorViewModel: DebtorViewModel by viewModels()
-
-    private var sumOfIncomeAmount = arrayListOf<Int>()
-    var outcomeAmount = 0
-
+    private val paymentsRecyclerAdapter = PaymentsRecyclerAdapter(this)
+    private val debtorViewModel: DebtorViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initSharedPrefs(requireContext())
         initializeAdapter()
         initializeAdMobAds()
 
@@ -38,33 +38,40 @@ class Payments : Fragment(R.layout.fragment_payments) {
 
     }
 
+    private fun checkPaymentsList(payments: List<Debtor>) {
+        if (payments.isEmpty()) {
+            noPaymentsInfoTxt.visibility = View.VISIBLE
+        } else {
+            noPaymentsInfoTxt.visibility = View.GONE
+            paymentsRecyclerAdapter.differ.submitList(payments)
+        }
+    }
+
     private fun showTotalMoney() {
         debtorViewModel.calculateTotal().observe(viewLifecycleOwner, { money ->
             money?.let {
                 if (money.containsKey("POSITIVE_NUMBER")) {
-                    sumOfMoneyAmount.setTextColor(context?.resources?.getColor(android.R.color.holo_green_light)!!)
-                    sumOfMoneyAmount.text = money.getValue("POSITIVE_NUMBER").toString()
+                    sumOfMoneyAmount.setTextColor(context?.resources?.getColor(android.R.color.holo_green_dark)!!)
+                    sumOfMoneyAmount.text = "+${readFromPrefs("string", "")}${money.getValue("POSITIVE_NUMBER")}"
                 }
 
                 if (money.containsKey("NEGATIVE_NUMBER")) {
-                    sumOfMoneyAmount.setTextColor(context?.resources?.getColor(android.R.color.holo_red_light)!!)
-                    sumOfMoneyAmount.text = "- ${money.getValue("NEGATIVE_NUMBER")}"
+                    sumOfMoneyAmount.setTextColor(context?.resources?.getColor(android.R.color.holo_red_dark)!!)
+                    sumOfMoneyAmount.text = "-${readFromPrefs("string", "")}${money.getValue("NEGATIVE_NUMBER")}"
                 }
             }
         })
     }
 
-
     private fun showAllPayments() {
         debtorViewModel.getAllPayments().observe(viewLifecycleOwner, { debtors ->
            debtors?.let {
                it.let {
-                   paymentsRecyclerAdapter.differ.submitList(it)
+                   checkPaymentsList(it)
                }
             }
-
        })
-   }
+    }
 
     private fun listenToAddNewPaymentClick() {
         addPaymentButton.setOnClickListener {
@@ -84,5 +91,10 @@ class Payments : Fragment(R.layout.fragment_payments) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = paymentsRecyclerAdapter
         }
+    }
+
+
+    override fun onDebtorClick(debtor_name: String) {
+        Navigation.findNavController(requireView()).navigate(PaymentsDirections.actionPaymentsToDebtorDetail(debtor_name))
     }
 }

@@ -1,7 +1,9 @@
 package com.example.owes.repository
 
-import com.example.owes.data.db.Debtor
+import com.example.owes.data.model.entities.Debtor
 import com.example.owes.data.db.DebtorDao
+import com.example.owes.data.model.entities.PartialPayment
+import com.example.owes.data.model.relations.DebtorWithPPayments
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -14,16 +16,44 @@ class DebtorRepository @Inject constructor(private val debtorDao: DebtorDao) {
          }
      }
 
-     fun deleteDebtor(debtor: Debtor) = debtorDao.deleteDebtor(debtor)
+    fun insertPPayment(partialPayment: PartialPayment) {
+        CoroutineScope(Dispatchers.IO).launch {
+            debtorDao.addPPayment(partialPayment)
+        }
+    }
 
-    fun getAllPayments() = debtorDao.getAllDebtors()
+     fun deleteDebtor(debtor: Debtor)  {
+         CoroutineScope(Dispatchers.IO).launch {
+             debtorDao.deleteDebtor(debtor)
+         }
+     }
+
+    fun deletepPayment(ppayment: PartialPayment)  {
+        CoroutineScope(Dispatchers.IO).launch {
+            debtorDao.deletePartialPayment(ppayment)
+        }
+    }
+
+
+    fun updateDebtor(debtor: Debtor) {
+        CoroutineScope(Dispatchers.IO).launch {
+            debtorDao.updateDebtor(debtor)
+        }
+    }
+
+     fun getAllPayments() = debtorDao.getAllUnpaidDebtors()
+     fun getAllPaidDebts() = debtorDao.getAllPaidDebtors()
+     fun getSingleDebtor(debtorName: String) = debtorDao.getSingleDebtor(debtorName)
+     fun getPPayments(debtorName: String) = debtorDao.getPPaymentsForDebtor(debtorName)
 
     fun getIncomeMoney(): List<Int> = runBlocking {
         debtorDao.getIncomeAmount()
     }
 
+
     fun getOutcomeMoney(): List<Int> = runBlocking {
         debtorDao.getOutcomeAmount()
     }
+
 
 }

@@ -1,24 +1,38 @@
 package com.example.owes.viewmodels
 
 import androidx.lifecycle.*
-import com.example.owes.data.db.Debtor
+import com.example.owes.data.model.entities.Debtor
+import com.example.owes.data.model.entities.PartialPayment
 import com.example.owes.repository.DebtorRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class DebtorViewModel @Inject constructor(
-    val repository: DebtorRepository
+    private val repository: DebtorRepository
 ): ViewModel() {
 
      private var _payments: MutableLiveData<Map<String, Int>> = MutableLiveData()
+     private var _totalPaidAmount: MutableLiveData<Int> = MutableLiveData()
 
 
     fun addDebtor(debtor: Debtor) {
             repository.insertDebtor(debtor)
     }
 
-    fun getAllPayments() = repository.getAllPayments()
+    fun addPartialPayment(partialPayment: PartialPayment) {
+        repository.insertPPayment(partialPayment)
+    }
+
+    fun updateDebtor(debtor: Debtor) {
+        repository.updateDebtor(debtor)
+    }
+
+     fun getAllPayments() = repository.getAllPayments()
+     fun getAllPaidDebts() = repository.getAllPaidDebts()
+     fun getOneDebtor(debtorName: String) = repository.getSingleDebtor(debtorName)
+     fun getPartialPaymentsForDebtor(debtorName: String) = repository.getPPayments(debtorName)
+
 
     private fun getIncomeMoneyAmount() = sumMoney(repository.getIncomeMoney())
     private fun getOutcomeMoneyAmount() = sumMoney(repository.getOutcomeMoney())
@@ -43,6 +57,10 @@ class DebtorViewModel @Inject constructor(
 
         return _payments
     }
+
+
+    fun deletePayment(debtor: Debtor) = repository.deleteDebtor(debtor)
+    fun deletePPayment(partialPay: PartialPayment) = repository.deletepPayment(partialPay)
 
 
 

@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Owes</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="currency_array">
+        <item>$</item>
+        <item>€</item>
+        <item>£</item>
+    </string-array>
 </resources>

@@ -13,13 +13,15 @@
         <action
             android:id="@+id/action_payments_to_addPayment"
             app:destination="@id/addPayment" />
+        <action
+            android:id="@+id/action_payments_to_paidDebts"
+            app:destination="@id/paidDebts" />
+        <action
+            android:id="@+id/action_payments_to_debtorDetail"
+            app:destination="@id/debtorDetail"
+            app:popUpToInclusive="false" />
     </fragment>
 
-    <fragment
-        android:id="@+id/split"
-        android:name="com.example.owes.ui.Split"
-        android:label="Split"
-        tools:layout="@layout/fragment_split" />
     <fragment
         android:id="@+id/settings"
         android:name="com.example.owes.ui.Settings"
@@ -33,6 +35,39 @@
         <action
             android:id="@+id/action_addPayment_to_payments"
             app:destination="@id/payments" />
+    </fragment>
+    <fragment
+        android:id="@+id/paidDebts"
+        android:name="com.example.owes.ui.PaidDebts"
+        android:label="Paid Debts" >
+        <action
+            android:id="@+id/action_paidDebts_to_debtorDetail"
+            app:destination="@id/debtorDetail" />
+    </fragment>
+    <fragment
+        android:id="@+id/debtorDetail"
+        android:name="com.example.owes.ui.DebtorDetail"
+        android:label="Debtor Detail" >
+        <argument
+            android:name="debtor_id"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_debtorDetail_to_partialPayments"
+            app:destination="@id/partialPayments" />
+        <action
+            android:id="@+id/action_debtorDetail_to_paidDebts"
+            app:destination="@id/paidDebts" />
+    </fragment>
+    <fragment
+        android:id="@+id/partialPayments"
+        android:name="com.example.owes.ui.PartialPayments"
+        android:label="PartialPayments" >
+        <action
+            android:id="@+id/action_partialPayments_to_debtorDetail"
+            app:destination="@id/debtorDetail" />
+        <argument
+            android:name="debtorName"
+            app:argType="string" />
     </fragment>
 
 </navigation>
