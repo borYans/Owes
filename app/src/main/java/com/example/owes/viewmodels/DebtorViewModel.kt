@@ -13,6 +13,7 @@ class DebtorViewModel @Inject constructor(
 ): ViewModel() {
 
      private var _payments: MutableLiveData<Map<String, Int>> = MutableLiveData()
+     private var _totalPaidAmount: MutableLiveData<Int> = MutableLiveData()
 
 
     fun addDebtor(debtor: Debtor) {
@@ -56,6 +57,7 @@ class DebtorViewModel @Inject constructor(
 
         return _payments
     }
+
 
     fun deletePayment(debtor: Debtor) = repository.deleteDebtor(debtor)
     fun deletePPayment(partialPay: PartialPayment) = repository.deletepPayment(partialPay)

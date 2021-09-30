@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.owes.R
 import com.example.owes.data.model.entities.Debtor
 import com.example.owes.data.model.entities.PartialPayment
+import com.example.owes.utils.OwesSharedPrefs.initSharedPrefs
+import com.example.owes.utils.OwesSharedPrefs.readFromPrefs
 import kotlinx.android.synthetic.main.item_partial_payment.view.*
 
 class PartialPaymentRecyclerAdapter: RecyclerView.Adapter<PartialPaymentRecyclerAdapter.PartialPaymentViewHolder>() {
@@ -34,10 +36,12 @@ class PartialPaymentRecyclerAdapter: RecyclerView.Adapter<PartialPaymentRecycler
     }
 
     override fun onBindViewHolder(holder: PartialPaymentViewHolder, position: Int) {
+        initSharedPrefs(holder.itemView.context)
+        val curr = readFromPrefs("string", "")
         val partialPayment = partialPDiffer.currentList[position]
         holder.itemView.apply {
             datePartialPayment.text = partialPayment.date
-            amountPartialPayment.text = partialPayment.amount.toString()
+            amountPartialPayment.text = "$curr${partialPayment.amount}"
         }
     }
 

@@ -18,7 +18,8 @@
             app:destination="@id/paidDebts" />
         <action
             android:id="@+id/action_payments_to_debtorDetail"
-            app:destination="@id/debtorDetail" />
+            app:destination="@id/debtorDetail"
+            app:popUpToInclusive="false" />
     </fragment>
 
     <fragment
@@ -53,6 +54,9 @@
         <action
             android:id="@+id/action_debtorDetail_to_partialPayments"
             app:destination="@id/partialPayments" />
+        <action
+            android:id="@+id/action_debtorDetail_to_paidDebts"
+            app:destination="@id/paidDebts" />
     </fragment>
     <fragment
         android:id="@+id/partialPayments"

@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
 import com.example.owes.R
+import com.example.owes.data.model.entities.Debtor
 import com.example.owes.data.model.entities.PartialPayment
 import com.example.owes.utils.DateConverter.convertDateToSimpleFormatString
 import com.example.owes.viewmodels.DebtorViewModel
@@ -15,11 +17,13 @@ import java.util.*
 class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
 
     var debtorName: String? = null
+    lateinit var debtor: Debtor
     private val debtorViewModel: DebtorViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getDebtorNameFromArgs()
+        getDebtorObject()
 
         savePartialBtn.setOnClickListener {
             val pPayment = PartialPayment(
@@ -29,9 +33,24 @@ class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
                 debtorName!!
             )
             debtorViewModel.addPartialPayment(partialPayment = pPayment)
+
+            debtor.remainingAmountMoney = debtor.remainingAmountMoney - partialAmountMoneyInput.text.toString().toInt()
+            debtor.totalAmountMoney += partialAmountMoneyInput.text.toString().toInt()
+            debtorViewModel.updateDebtor(debtor)
+
+            Navigation.findNavController(requireView()).navigate(PartialPaymentsDirections.actionPartialPaymentsToDebtorDetail(debtorName!!))
         }
 
 
+
+    }
+
+    private fun getDebtorObject() {
+        debtorViewModel.getOneDebtor(debtorName!!).observe(viewLifecycleOwner, { deb ->
+            deb?.let {
+                debtor = it
+            }
+        })
     }
 
     private fun getDebtorNameFromArgs() {

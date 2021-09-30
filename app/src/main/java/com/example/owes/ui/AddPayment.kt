@@ -54,12 +54,12 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
             val debtor = Debtor(
                 oweCheckBox.isChecked,
                 nameInputBox.text.toString(),
+                0,    //total paid up to date
                 amountInputBox.text.toString().toInt(),
-                amountInputBox.text.toString().toInt(), //remaining amount of money.
                 referenceInputBox.text.toString(),
                 dueDate.toString(),
                 null,
-                false                //for adding payment this is set to false as default.
+                false
             )
                 debtorViewModel.addDebtor(debtor)
 

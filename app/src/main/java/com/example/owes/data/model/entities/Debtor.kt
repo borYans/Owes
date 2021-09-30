@@ -14,7 +14,7 @@ data class Debtor(
     val personName: String,
 
     @ColumnInfo(name = "money_amount")
-    val totalAmountMoney: Int,
+    var totalAmountMoney: Int,
 
     @ColumnInfo(name = "remaining_amount")
     var remainingAmountMoney: Int,

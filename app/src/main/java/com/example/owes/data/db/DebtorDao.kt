@@ -24,10 +24,10 @@ interface DebtorDao {
     @Query("SELECT * FROM debtors WHERE debtor_name = :debtorName LIMIT 1")
      fun getSingleDebtor(debtorName: String): LiveData<Debtor>
 
-    @Query("SELECT money_amount FROM debtors WHERE is_owned = 1 AND  is_payed = 0")
+    @Query("SELECT remaining_amount FROM debtors WHERE is_owned = 1 AND  is_payed = 0")
     suspend fun getIncomeAmount(): List<Int>
 
-    @Query("SELECT money_amount FROM debtors WHERE is_owned = 0 AND is_payed = 0")
+    @Query("SELECT remaining_amount FROM debtors WHERE is_owned = 0 AND is_payed = 0")
     suspend fun getOutcomeAmount(): List<Int>
 
     @Transaction
