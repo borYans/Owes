@@ -95,8 +95,8 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     private fun askDeleteConfirmation(ppayment: PartialPayment) {
         Snackbar.make(requireView(), "Payment deleted.", Snackbar.LENGTH_LONG).apply {
             setBackgroundTint(resources.getColor(android.R.color.holo_red_light))
-            setTextColor(resources.getColor(R.color.black))
-            setActionTextColor(resources.getColor(R.color.black))
+            setTextColor(resources.getColor(R.color.white))
+            setActionTextColor(resources.getColor(R.color.white))
             setAction("Undo") {
                 debtorViewModel.addPartialPayment(ppayment)
 
@@ -180,7 +180,6 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
             if (isPaidBtnClicked) {
                 setUnpaidButtonState()
                 retrieveRemainingAmount()
-                partialPaymentRecycler.visibility = View.VISIBLE
                 isPaidBtnClicked = false
                 saveButtonDetail.apply {
                     isEnabled = false
@@ -190,7 +189,6 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
                 isPaidBtnClicked = true
                 clearRemainingAmount()
                 setPaidButtonState()
-                partialPaymentRecycler.visibility = View.GONE
                 markAsPaidBtn.text = "Paid on ${convertDateToSimpleFormatString(Calendar.getInstance().time)} | Unpaid ->"
                 saveButtonDetail.apply {
                     isEnabled = true
@@ -252,7 +250,6 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
         if (remainingMoney == 0) {
             isPaidBtnClicked = true
             setPaidButtonState()
-            partialPaymentRecycler.visibility = View.GONE
             markAsPaidBtn.text = "Paid on ${convertDateToSimpleFormatString(Calendar.getInstance().time)} | Unpaid ->"
             saveButtonDetail.apply {
                 isEnabled = true

@@ -2,6 +2,7 @@ package com.example.owes.ui
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
@@ -9,6 +10,7 @@ import com.example.owes.R
 import com.example.owes.data.model.entities.Debtor
 import com.example.owes.data.model.entities.PartialPayment
 import com.example.owes.utils.DateConverter.convertDateToSimpleFormatString
+import com.example.owes.utils.classicSnackBar
 import com.example.owes.viewmodels.DebtorViewModel
 import kotlinx.android.synthetic.main.fragment_partial_payments.*
 import java.util.*
@@ -32,15 +34,17 @@ class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
                 partialAmountMoneyInput.text.toString().toInt(),
                 debtorName!!
             )
-            debtorViewModel.addPartialPayment(pPayment)
 
-            debtor.remainingAmountMoney = debtor.remainingAmountMoney - partialAmountMoneyInput.text.toString().toInt()
-            debtor.totalAmountMoney += partialAmountMoneyInput.text.toString().toInt()
-            debtorViewModel.updateDebtor(debtor)
-
-            Navigation.findNavController(requireView()).navigate(PartialPaymentsDirections.actionPartialPaymentsToDebtorDetail(debtorName!!))
+            if(debtor.remainingAmountMoney < partialAmountMoneyInput.text.toString().toInt()) {
+                requireView().classicSnackBar("You have exceeded the limit of the remaining amount.")
+            } else {
+                debtor.remainingAmountMoney -= partialAmountMoneyInput.text.toString().toInt()
+                debtor.totalAmountMoney += partialAmountMoneyInput.text.toString().toInt()
+                debtorViewModel.addPartialPayment(pPayment)
+                debtorViewModel.updateDebtor(debtor)
+                Navigation.findNavController(requireView()).navigate(PartialPaymentsDirections.actionPartialPaymentsToDebtorDetail(debtorName!!))
+            }
         }
-
 
     }
 

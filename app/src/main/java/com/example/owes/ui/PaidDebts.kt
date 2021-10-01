@@ -79,8 +79,8 @@ class PaidDebts : Fragment(R.layout.fragment_paid_debts), DebtorOnClickListener 
     private fun askDeleteConfirmation(debtor: Debtor) {
         Snackbar.make(requireView(), "Payment deleted.", Snackbar.LENGTH_LONG).apply {
             setBackgroundTint(resources.getColor(android.R.color.holo_red_light))
-            setTextColor(resources.getColor(R.color.black))
-            setActionTextColor(resources.getColor(R.color.black))
+            setTextColor(resources.getColor(R.color.white))
+            setActionTextColor(resources.getColor(R.color.white))
             setAction("Undo") {
                 debtorViewModel.addDebtor(debtor)
             }
