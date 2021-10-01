@@ -10,5 +10,7 @@
 
     //project colors
     <color name="main_background_color">#0E0E0E</color>
+    <color name="unavailable_save_button_color">#D80E0E0E</color>
+    <color name="not_available_button">#9F669900</color>
 
 </resources>
