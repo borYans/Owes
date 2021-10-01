@@ -6,8 +6,10 @@ import com.example.owes.data.model.entities.PartialPayment
 import com.example.owes.data.model.relations.DebtorWithPPayments
 import kotlinx.coroutines.*
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class DebtorRepository @Inject constructor(private val debtorDao: DebtorDao) {
+@Singleton
+class DebtorRepository @Inject constructor(private val debtorDao: DebtorDao): DebtorRepositoryImpl {
 
 
      fun insertDebtor(debtor: Debtor) {
@@ -39,6 +41,10 @@ class DebtorRepository @Inject constructor(private val debtorDao: DebtorDao) {
         CoroutineScope(Dispatchers.IO).launch {
             debtorDao.updateDebtor(debtor)
         }
+    }
+
+    override fun getAllDebtors() = runBlocking {
+        debtorDao.getAllDebtors()
     }
 
      fun getAllPayments() = debtorDao.getAllUnpaidDebtors()

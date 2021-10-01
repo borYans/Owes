@@ -1,9 +1,9 @@
 package com.example.owes.ui
 
-import android.graphics.Color.*
+import android.graphics.Color.BLACK
+import android.graphics.Color.WHITE
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
@@ -15,17 +15,13 @@ import com.example.owes.R
 import com.example.owes.data.adapters.PartialPaymentRecyclerAdapter
 import com.example.owes.data.model.entities.Debtor
 import com.example.owes.data.model.entities.PartialPayment
-import com.example.owes.data.model.relations.DebtorWithPPayments
 import com.example.owes.utils.DateConverter.convertDateToSimpleFormatString
 import com.example.owes.utils.OwesSharedPrefs
 import com.example.owes.utils.OwesSharedPrefs.initSharedPrefs
-import com.example.owes.utils.toast
 import com.example.owes.viewmodels.DebtorViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_debtor_detail.*
-import kotlinx.android.synthetic.main.fragment_paid_debts.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {

@@ -22,7 +22,6 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_paid_debts.*
 import kotlinx.android.synthetic.main.fragment_payments.*
 
 @AndroidEntryPoint

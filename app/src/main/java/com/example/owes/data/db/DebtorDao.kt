@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.owes.data.model.entities.Debtor
 import com.example.owes.data.model.entities.PartialPayment
-import com.example.owes.data.model.relations.DebtorWithPPayments
 
 @Dao
 interface DebtorDao {
@@ -14,6 +13,9 @@ interface DebtorDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addPPayment(partialPayment: PartialPayment)
+
+    @Query("SELECT * FROM debtors")
+    suspend fun getAllDebtors(): List<Debtor>
 
     @Query("SELECT * FROM debtors WHERE is_payed = 0")
      fun getAllUnpaidDebtors(): LiveData<List<Debtor>>

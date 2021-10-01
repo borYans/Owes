@@ -1,21 +1,26 @@
 package com.example.owes.viewmodels
 
+import android.app.Application
+import android.content.Context
 import androidx.lifecycle.*
+import com.example.owes.application.MyApplication
 import com.example.owes.data.model.entities.Debtor
 import com.example.owes.data.model.entities.PartialPayment
 import com.example.owes.repository.DebtorRepository
 import com.example.owes.utils.Constants.NEGATIVE_NUMBER
 import com.example.owes.utils.Constants.POSITIVE_NUMBER
+import com.example.owes.utils.OwesSharedPrefs.initSharedPrefs
+import com.example.owes.utils.OwesSharedPrefs.readFromPrefs
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel
 class DebtorViewModel @Inject constructor(
-    private val repository: DebtorRepository
+    private val repository: DebtorRepository,
 ): ViewModel() {
 
      private var _payments: MutableLiveData<Map<String, Int>> = MutableLiveData()
-     private var _totalPaidAmount: MutableLiveData<Int> = MutableLiveData()
 
 
     fun addDebtor(debtor: Debtor) {
@@ -63,6 +68,7 @@ class DebtorViewModel @Inject constructor(
 
     fun deletePayment(debtor: Debtor) = repository.deleteDebtor(debtor)
     fun deletePPayment(partialPay: PartialPayment) = repository.deletepPayment(partialPay)
+
 
 
 
