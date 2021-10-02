@@ -27,8 +27,6 @@ class Settings : Fragment(R.layout.fragment_settings) {
 
         listenSaveButton()
         listenRemoveAdsButton()
-        setNotificationWorker()
-
     }
 
     private fun restoreNotificationToggle() {

@@ -27,10 +27,10 @@ interface DebtorDao {
      fun getSingleDebtor(debtorName: String): LiveData<Debtor>
 
     @Query("SELECT remaining_amount FROM debtors WHERE is_owned = 1 AND  is_payed = 0")
-    suspend fun getIncomeAmount(): List<Int>
+    suspend fun getIncomeAmount(): List<Double>
 
     @Query("SELECT remaining_amount FROM debtors WHERE is_owned = 0 AND is_payed = 0")
-    suspend fun getOutcomeAmount(): List<Int>
+    suspend fun getOutcomeAmount(): List<Double>
 
     @Transaction
     @Query("SELECT * FROM debtors d INNER JOIN partial_payment p ON d.debtor_name = p.debtor_name WHERE d.debtor_name = :debtorName")

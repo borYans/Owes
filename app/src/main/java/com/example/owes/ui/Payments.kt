@@ -39,7 +39,6 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
         listenToAddNewPaymentClick()
         showAllPayments()
 
-
         val itemTouchHelpeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -59,7 +58,6 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
 
         val itemTouchHelper = ItemTouchHelper(itemTouchHelpeCallback)
         itemTouchHelper.attachToRecyclerView(paymentsRecyclerView)
-
     }
 
     private fun askDeleteConfirmation(debtor: Debtor) {

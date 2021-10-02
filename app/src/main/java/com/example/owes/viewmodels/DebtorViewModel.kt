@@ -20,7 +20,7 @@ class DebtorViewModel @Inject constructor(
     private val repository: DebtorRepository,
 ): ViewModel() {
 
-     private var _payments: MutableLiveData<Map<String, Int>> = MutableLiveData()
+     private var _payments: MutableLiveData<Map<String, Double>> = MutableLiveData()
 
 
     fun addDebtor(debtor: Debtor) {
@@ -44,15 +44,15 @@ class DebtorViewModel @Inject constructor(
     private fun getIncomeMoneyAmount() = sumMoney(repository.getIncomeMoney())
     private fun getOutcomeMoneyAmount() = sumMoney(repository.getOutcomeMoney())
 
-    private fun sumMoney(list: List<Int>): Int {
-        var sum = 0
+    private fun sumMoney(list: List<Double>): Double {
+        var sum = 0.0
         for (coin in list) {
             sum += coin
         }
         return sum
     }
 
-     fun calculateTotal(): LiveData<Map<String, Int>> {
+     fun calculateTotal(): LiveData<Map<String, Double>> {
          val positiveNumber = getIncomeMoneyAmount() - getOutcomeMoneyAmount()
          val negativeNumber = getOutcomeMoneyAmount() - getIncomeMoneyAmount()
 

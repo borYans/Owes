@@ -2,7 +2,10 @@ package com.example.owes.worker
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -13,6 +16,8 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.owes.R
 import com.example.owes.data.db.DebtorDao
+import com.example.owes.ui.DebtorDetail
+import com.example.owes.ui.MainActivity
 import com.example.owes.utils.DateConverter.convertDateToSimpleFormatString
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -27,14 +32,13 @@ class NotificationWorker @AssistedInject constructor (
 
 
     override suspend fun doWork(): Result {
-
         val todayDate = getTodaysDateAsString()
         val debtors = debtorDao.getAllDebtors()
-            for (date in debtors) {
-                if (todayDate == date.dueDate) {
-                    Log.d("WORK MANAGER", "Dates ---------->: ${date.dueDate} ")
+            for (debtor in debtors) {
+                if (todayDate == debtor.dueDate) {
+                    Log.d("WORK MANAGER", "Dates ---------->: ${debtor.dueDate} ")
                     createNotificationChannel()
-                    showNotifiaction()
+                    showNotification(debtor.personName, debtor.remainingAmountMoney)
                 }
             }
 
@@ -43,15 +47,16 @@ class NotificationWorker @AssistedInject constructor (
 
     private fun getTodaysDateAsString() = convertDateToSimpleFormatString(Calendar.getInstance().time)
 
-    private fun showNotifiaction() { //here pass name of the debtor and amount of money to pay
+    private fun showNotification(debtorName: String, amount: Double) {
         val notification = NotificationCompat.Builder(applicationContext, "channelID")
         notification.apply {
             setSmallIcon(R.drawable.credit_card_24)
-                setContentTitle("Deadline for payment")
-                setContentText("This person obligated to pay until today's date.")
+                setContentTitle("Deadline payment for $debtorName")
+                setContentText("Remaining amount of $amount.")
+            setContentIntent(setPendingIntent())
                 priority = NotificationCompat.PRIORITY_DEFAULT
         }
-        NotificationManagerCompat.from(applicationContext).also { it.notify(1, notification.build()) } //this id should be unique
+        NotificationManagerCompat.from(applicationContext).also { it.notify(System.currentTimeMillis().toInt(), notification.build()) } //this id should be unique
     }
 
     private fun createNotificationChannel() {
@@ -63,6 +68,14 @@ class NotificationWorker @AssistedInject constructor (
             channel.description = description
             val notificationManager: NotificationManager? = getSystemService(applicationContext, NotificationManager::class.java)
             notificationManager?.createNotificationChannel(channel)
+        }
+    }
+
+    private fun setPendingIntent(): PendingIntent {
+        val intent = Intent(applicationContext, MainActivity::class.java) // potential memory leak! Check again this context scope...
+        return TaskStackBuilder.create(applicationContext).run {
+            addNextIntentWithParentStack(intent)
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
         }
     }
 

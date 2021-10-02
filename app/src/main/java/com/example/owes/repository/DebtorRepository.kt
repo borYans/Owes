@@ -3,7 +3,6 @@ package com.example.owes.repository
 import com.example.owes.data.model.entities.Debtor
 import com.example.owes.data.db.DebtorDao
 import com.example.owes.data.model.entities.PartialPayment
-import com.example.owes.data.model.relations.DebtorWithPPayments
 import kotlinx.coroutines.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -52,12 +51,12 @@ class DebtorRepository @Inject constructor(private val debtorDao: DebtorDao): De
      fun getSingleDebtor(debtorName: String) = debtorDao.getSingleDebtor(debtorName)
      fun getPPayments(debtorName: String) = debtorDao.getPPaymentsForDebtor(debtorName)
 
-    fun getIncomeMoney(): List<Int> = runBlocking {
+    fun getIncomeMoney(): List<Double> = runBlocking {
         debtorDao.getIncomeAmount()
     }
 
 
-    fun getOutcomeMoney(): List<Int> = runBlocking {
+    fun getOutcomeMoney(): List<Double> = runBlocking {
         debtorDao.getOutcomeAmount()
     }
 

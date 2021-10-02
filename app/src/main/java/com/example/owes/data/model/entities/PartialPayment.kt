@@ -8,7 +8,7 @@ data class PartialPayment(
     @PrimaryKey(autoGenerate = true)
     val paymentId: Int?,
     val date: String,
-    val amount: Int,
+    val amount: Double,
     val debtor_name: String
 
 )
