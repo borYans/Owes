@@ -1,5 +1,6 @@
 package com.example.owes.data.db
 
+import android.content.Context
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.owes.data.model.entities.Debtor
@@ -9,6 +10,8 @@ import com.example.owes.data.model.entities.PartialPayment
 abstract class DebtorDatabase: RoomDatabase() {
 
     abstract fun debtorDao(): DebtorDao
+
+
 
 
 }

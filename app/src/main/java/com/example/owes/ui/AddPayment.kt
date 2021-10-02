@@ -21,24 +21,22 @@ import java.util.*
 class AddPayment : Fragment(R.layout.fragment_add_payment) {
 
     private var dueDate: String? = null
-
     private val debtorViewModel: DebtorViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setInitalCheckBoxesState()
+        setInitialCheckBoxesState()
         handleCheckBoxClicks()
         listenForCalendarInput()
-
 
         listenToSaveButton()
     }
 
-    private fun setInitalCheckBoxesState() {
+    private fun setInitialCheckBoxesState() {
         owedCheckBox.isChecked = false
         oweCheckBox.isChecked = true
-
     }
+
 
     private fun handleCheckBoxClicks() {
         oweCheckBox.setOnClickListener {
@@ -55,8 +53,8 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
             val debtor = Debtor(
                 oweCheckBox.isChecked,
                 nameInputBox.text.toString(),
-                0,    //total paid up to date
-                amountInputBox.text.toString().toInt(),
+                0.0,    //total paid up to date
+                amountInputBox.text.toString().toDouble(),
                 referenceInputBox.text.toString(),
                 dueDate.toString(),
                 null,
@@ -67,7 +65,6 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
            Navigation.findNavController(requireView()).navigate(AddPaymentDirections.actionAddPaymentToPayments())
         }
     }
-
 
     private fun listenForCalendarInput() {
         val datePicker = DatePickerDialog.OnDateSetListener { datePicker, YEAR, MONTH, DAY ->
@@ -85,7 +82,10 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
                 Calendar.getInstance().get(Calendar.YEAR),
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-            ).show()
+            ).apply {
+                this.datePicker.minDate = System.currentTimeMillis() - 1000
+            }
+                .show()
         }
     }
 

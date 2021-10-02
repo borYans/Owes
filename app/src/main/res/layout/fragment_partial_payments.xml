@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/check_box_background"
         android:hint="Enter partial amount"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

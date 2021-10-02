@@ -39,11 +39,13 @@ class PartialPaymentRecyclerAdapter: RecyclerView.Adapter<PartialPaymentRecycler
         initSharedPrefs(holder.itemView.context)
         val curr = readFromPrefs(holder.itemView.context.getString(R.string.CURRENCY), holder.itemView.context.getString(R.string.DOLLAR))
         val partialPayment = partialPDiffer.currentList[position]
+
+        val partialAmount = String.format("%.2f", partialPayment.amount).toDouble()
         holder.itemView.apply {
             datePartialPayment.text = partialPayment.date
-            amountPartialPayment.text = "$curr${partialPayment.amount}"
+            amountPartialPayment.text = "$curr${partialAmount}"
         }
     }
 
-    override fun getItemCount()= partialPDiffer.currentList.size
+    override fun getItemCount() = partialPDiffer.currentList.size
 }

@@ -31,21 +31,20 @@ class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
             val pPayment = PartialPayment(
                 null,
                 convertDateToSimpleFormatString(Calendar.getInstance().time),
-                partialAmountMoneyInput.text.toString().toInt(),
+                partialAmountMoneyInput.text.toString().toDouble(),
                 debtorName!!
             )
 
-            if(debtor.remainingAmountMoney < partialAmountMoneyInput.text.toString().toInt()) {
+            if(debtor.remainingAmountMoney < partialAmountMoneyInput.text.toString().toDouble()) {
                 requireView().classicSnackBar("You have exceeded the limit of the remaining amount.")
             } else {
-                debtor.remainingAmountMoney -= partialAmountMoneyInput.text.toString().toInt()
-                debtor.totalAmountMoney += partialAmountMoneyInput.text.toString().toInt()
+                debtor.remainingAmountMoney -= partialAmountMoneyInput.text.toString().toDouble()
+                debtor.totalAmountMoney += partialAmountMoneyInput.text.toString().toDouble()
                 debtorViewModel.addPartialPayment(pPayment)
                 debtorViewModel.updateDebtor(debtor)
                 Navigation.findNavController(requireView()).navigate(PartialPaymentsDirections.actionPartialPaymentsToDebtorDetail(debtorName!!))
             }
         }
-
     }
 
     private fun getDebtorObject() {

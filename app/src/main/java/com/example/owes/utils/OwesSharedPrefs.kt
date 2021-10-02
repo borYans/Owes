@@ -33,6 +33,10 @@ object OwesSharedPrefs {
         return sharedPrefs.getString(key, value)
     }
 
+    fun readBooleanFromPrefs(key: String, value: Boolean): Boolean? {
+        return sharedPrefs.getBoolean(key, value)
+    }
+
 
     fun deleteFromPrefs(key: String) {
         sharedPrefs.edit().remove(key).apply()

@@ -42,6 +42,7 @@ android {
 dependencies {
     def room_version = "2.3.0"
     def lifecycle_version = "2.3.1"
+    def work_version = "2.6.0"
     def arch_version = "2.1.0"
 
 
@@ -54,6 +55,15 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation("androidx.room:room-ktx:$room_version")
+
+    //workamanager
+    implementation("androidx.work:work-runtime-ktx:$work_version")
+
+    implementation("androidx.hilt:hilt-work:1.0.0")
+    // When using Kotlin.
+    kapt("androidx.hilt:hilt-compiler:1.0.0")
+
+
 
 
     //DI

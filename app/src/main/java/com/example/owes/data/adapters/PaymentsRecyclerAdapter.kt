@@ -43,19 +43,21 @@ class PaymentsRecyclerAdapter(
         val curr = readFromPrefs(holder.itemView.context.getString(R.string.CURRENCY), holder.itemView.context.getString(R.string.DOLLAR))
 
         val debtor = differ.currentList[position]
+        val totalAmount = String.format("%.2f", debtor.totalAmountMoney).toDouble()
+        val remainingAmount = String.format("%.2f", debtor.remainingAmountMoney).toDouble()
 
         holder.itemView.apply {
             when(debtor.isOwned) {
                 true -> {
                     imageView.setImageDrawable(holder.itemView.context.resources.getDrawable(R.drawable.ic_baseline_arrow_circle_right_24))
-                    if (debtor.isPayed) amountMoney.text = "+$curr${debtor.totalAmountMoney}" else  amountMoney.text = "+$curr${debtor.remainingAmountMoney}"
+                    if (debtor.isPayed) amountMoney.text = "+$curr${totalAmount}" else  amountMoney.text = "+$curr${remainingAmount}"
                     checkClosePayment(debtor)
 
                 }
                 else -> {
                     imageView.setImageDrawable(holder.itemView.context.resources.getDrawable(R.drawable.ic_baseline_arrow_circle_left_24))
                     amountMoney.setTextColor(holder.itemView.context.resources.getColor(android.R.color.holo_red_light))
-                    if (debtor.isPayed) amountMoney.text = "-$curr${debtor.totalAmountMoney}" else  amountMoney.text = "-$curr${debtor.remainingAmountMoney}"
+                    if (debtor.isPayed) amountMoney.text = "-$curr${totalAmount}" else  amountMoney.text = "-$curr${remainingAmount}"
                     checkClosePayment(debtor)
                 }
             }
@@ -72,12 +74,12 @@ class PaymentsRecyclerAdapter(
     }
 
     private fun View.checkClosePayment(debtor: Debtor) {
-        if (debtor.remainingAmountMoney == 0 && debtor.isPayed) amountMoney.apply {
+        if (debtor.remainingAmountMoney == 0.00 && debtor.isPayed) amountMoney.apply {
             text = "closed payment"
             textSize = 12f
             setTextColor(resources.getColor(R.color.black))
 
-        } else if (debtor.remainingAmountMoney == 0) amountMoney.apply {
+        } else if (debtor.remainingAmountMoney == 0.00) amountMoney.apply {
             text = "close this payment >"
             textSize = 12f
             setTextColor(resources.getColor(R.color.black))

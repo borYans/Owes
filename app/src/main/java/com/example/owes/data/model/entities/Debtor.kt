@@ -14,10 +14,10 @@ data class Debtor(
     val personName: String,
 
     @ColumnInfo(name = "money_amount")
-    var totalAmountMoney: Int,
+    var totalAmountMoney: Double,
 
     @ColumnInfo(name = "remaining_amount")
-    var remainingAmountMoney: Int,
+    var remainingAmountMoney: Double,
 
     @ColumnInfo(name = "reference")
     val reference: String,

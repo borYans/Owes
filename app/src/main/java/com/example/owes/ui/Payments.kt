@@ -22,7 +22,6 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_paid_debts.*
 import kotlinx.android.synthetic.main.fragment_payments.*
 
 @AndroidEntryPoint
@@ -39,7 +38,6 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
 
         listenToAddNewPaymentClick()
         showAllPayments()
-
 
         val itemTouchHelpeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
             override fun onMove(
@@ -60,7 +58,6 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
 
         val itemTouchHelper = ItemTouchHelper(itemTouchHelpeCallback)
         itemTouchHelper.attachToRecyclerView(paymentsRecyclerView)
-
     }
 
     private fun askDeleteConfirmation(debtor: Debtor) {

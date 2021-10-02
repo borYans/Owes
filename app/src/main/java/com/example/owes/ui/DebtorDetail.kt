@@ -1,9 +1,9 @@
 package com.example.owes.ui
 
-import android.graphics.Color.*
+import android.graphics.Color.BLACK
+import android.graphics.Color.WHITE
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
@@ -15,17 +15,13 @@ import com.example.owes.R
 import com.example.owes.data.adapters.PartialPaymentRecyclerAdapter
 import com.example.owes.data.model.entities.Debtor
 import com.example.owes.data.model.entities.PartialPayment
-import com.example.owes.data.model.relations.DebtorWithPPayments
 import com.example.owes.utils.DateConverter.convertDateToSimpleFormatString
 import com.example.owes.utils.OwesSharedPrefs
 import com.example.owes.utils.OwesSharedPrefs.initSharedPrefs
-import com.example.owes.utils.toast
 import com.example.owes.viewmodels.DebtorViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_debtor_detail.*
-import kotlinx.android.synthetic.main.fragment_paid_debts.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
@@ -38,8 +34,8 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     private var isPaidBtnClicked = false
 
     //screenshot of the money variables
-    private var totalPaidMoney: Int = 0
-    private var remainingMoney: Int = 0
+    private var totalPaidMoney: Double = 0.0
+    private var remainingMoney: Double = 0.0
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,7 +65,7 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
                     val position = viewHolder.adapterPosition
                     val payment = partialPaymentRecyclerAdapter.partialPDiffer.currentList[position]
                     debtorViewModel.deletePPayment(payment)
-                    updateDebtor(partialPaymentRecyclerAdapter.partialPDiffer.currentList[position].amount)
+                    updateDebtor(String.format("%.2f", partialPaymentRecyclerAdapter.partialPDiffer.currentList[position].amount).toDouble())
                     askDeleteConfirmation(payment)
                 }
             }
@@ -80,11 +76,11 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     }
 
 
-    private fun updateDebtor(partialAmount: Int) {
+    private fun updateDebtor(partialAmount: Double) {
         debtor.apply {
             val total = totalAmountMoney - partialAmount
             val remaining = remainingAmountMoney + partialAmount
-            if (total >= 0 && remaining >= 0) {
+            if (total >= 0.0 && remaining >= 0.0) {
                 totalAmountMoney -= partialAmount
                 remainingAmountMoney += partialAmount
             }
@@ -200,7 +196,7 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
 
     private fun clearRemainingAmount() {
         totalPaidMoney = debtor.totalAmountMoney + debtor.remainingAmountMoney
-        remainingMoney = 0
+        remainingMoney = 0.0
         remainingMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}$remainingMoney"
         totalMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${totalPaidMoney}"
     }
@@ -247,13 +243,20 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     }
 
     private fun listenForZeroRemainingMoney() {
-        if (remainingMoney == 0) {
+        if (remainingMoney == 0.0) {
             isPaidBtnClicked = true
             setPaidButtonState()
             markAsPaidBtn.text = "Paid on ${convertDateToSimpleFormatString(Calendar.getInstance().time)} | Unpaid ->"
             saveButtonDetail.apply {
                 isEnabled = true
                 setBackgroundColor(resources.getColor(R.color.main_background_color))
+            }
+        } else {
+            setUnpaidButtonState()
+            markAsPaidBtn.text = "Mark as paid"
+            saveButtonDetail.apply {
+                isEnabled = false
+                setBackgroundColor(resources.getColor(R.color.unavailable_save_button_color))
             }
         }
     }

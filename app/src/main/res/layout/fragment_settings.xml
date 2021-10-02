@@ -45,7 +45,7 @@
             android:alpha=".7"
             android:inputType="none"
             android:padding="8dp"
-            android:text="Currency"
+            android:text="@string/DOLLAR"
             android:textColor="@color/black" />
     </com.google.android.material.textfield.TextInputLayout>
 
