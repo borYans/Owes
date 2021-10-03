@@ -78,12 +78,12 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
             money?.let {
                 if (money.containsKey(POSITIVE_NUMBER)) {
                     sumOfMoneyAmount.setTextColor(context?.resources?.getColor(android.R.color.holo_green_dark)!!)
-                    sumOfMoneyAmount.text = "+${readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${money.getValue(POSITIVE_NUMBER)}"
+                    sumOfMoneyAmount.text = "+${readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${String.format("%.2f", money.getValue(POSITIVE_NUMBER))}"
                 }
 
                 if (money.containsKey(NEGATIVE_NUMBER)) {
                     sumOfMoneyAmount.setTextColor(context?.resources?.getColor(android.R.color.holo_red_dark)!!)
-                    sumOfMoneyAmount.text = "-${readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${money.getValue(NEGATIVE_NUMBER)}"
+                    sumOfMoneyAmount.text = "-${readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${String.format("%.2f", money.getValue(NEGATIVE_NUMBER))}"
                 }
             }
         })

@@ -12,13 +12,16 @@
         tools:layout="@layout/fragment_payments" >
         <action
             android:id="@+id/action_payments_to_addPayment"
-            app:destination="@id/addPayment" />
+            app:destination="@id/addPayment"
+            app:enterAnim="@android:anim/slide_in_left" />
         <action
             android:id="@+id/action_payments_to_paidDebts"
-            app:destination="@id/paidDebts" />
+            app:destination="@id/paidDebts"
+            app:enterAnim="@android:anim/fade_in" />
         <action
             android:id="@+id/action_payments_to_debtorDetail"
             app:destination="@id/debtorDetail"
+            app:enterAnim="@android:anim/slide_in_left"
             app:popUpToInclusive="false" />
     </fragment>
 
@@ -53,10 +56,12 @@
             app:argType="string" />
         <action
             android:id="@+id/action_debtorDetail_to_partialPayments"
-            app:destination="@id/partialPayments" />
+            app:destination="@id/partialPayments"
+            app:enterAnim="@android:anim/slide_in_left" />
         <action
             android:id="@+id/action_debtorDetail_to_paidDebts"
-            app:destination="@id/paidDebts" />
+            app:destination="@id/paidDebts"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/partialPayments"

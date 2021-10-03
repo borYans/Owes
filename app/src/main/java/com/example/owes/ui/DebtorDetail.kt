@@ -197,8 +197,8 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     private fun clearRemainingAmount() {
         totalPaidMoney = debtor.totalAmountMoney + debtor.remainingAmountMoney
         remainingMoney = 0.0
-        remainingMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}$remainingMoney"
-        totalMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${totalPaidMoney}"
+        remainingMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${String.format("%.2f", remainingMoney)}"
+        totalMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${String.format("%.2f", totalPaidMoney)}"
     }
 
     private fun setPaidButtonState() {
@@ -236,8 +236,8 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
                 setPaymentImageResource()
                 debtorNameTxtDetail.text = it.personName
                 referenceDetailTxt.text = it.reference
-                totalMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${debtor.totalAmountMoney}"
-                remainingMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${debtor.remainingAmountMoney}"
+                totalMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${String.format("%.2f", debtor.totalAmountMoney).toDouble()}"
+                remainingMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${String.format("%.2f", debtor.remainingAmountMoney).toDouble()}"
             }
         })
     }

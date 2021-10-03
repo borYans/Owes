@@ -27,8 +27,8 @@
 
                 <ImageView
                     android:id="@+id/owesSymbol"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:padding="22dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_baseline_arrow_circle_right_24"
@@ -70,7 +70,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:background="@drawable/check_box_background"
