@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Owes</string>
+    <string name="app_name">Tefter</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="CURRENCY">currency</string>
     <string name="DOLLAR">$</string>
@@ -7,6 +7,7 @@
     <string name="undo">Undo</string>
     <string name="due_date">Due date:</string>
     <string name="mark_as_paid">Mark as paid</string>
+    <string name="make_sure_mark_as_paid">Make sure you mark as paid before closing payment.</string>
 
     <string-array name="currency_array">
         <item>$</item>

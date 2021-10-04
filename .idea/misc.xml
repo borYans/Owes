@@ -9,15 +9,18 @@
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_circle_left_24.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_circle_right_24.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_right_alt_24.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/ic_baseline_keyboard_arrow_right_24.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/ic_money_flow.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/ic_money_outside_flow_24.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/ic_settings_24.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/money_inside_flow_24.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable/split_24.xml" value="0.371875" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.340625" />
         <entry key="app/src/main/res/layout/dropdown_currency_item.xml" value="0.3697916666666667" />
         <entry key="app/src/main/res/layout/fragment_add_payment.xml" value="0.4218653489808524" />
-        <entry key="app/src/main/res/layout/fragment_debtor_detail.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_debtor_detail.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_paid_debts.xml" value="0.3697916666666667" />
         <entry key="app/src/main/res/layout/fragment_partial_payments.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/fragment_payments.xml" value="0.3170731707317073" />
@@ -26,6 +29,10 @@
         <entry key="app/src/main/res/layout/item_partial_payment.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/item_payment.xml" value="0.5" />
         <entry key="app/src/main/res/menu/bottom_navigation.xml" value="0.3212962962962963" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.19427083333333334" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.19427083333333334" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_tefter_main.xml" value="0.19427083333333334" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_tefter_main_round.xml" value="0.19427083333333334" />
       </map>
     </option>
   </component>

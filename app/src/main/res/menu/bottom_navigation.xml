@@ -3,11 +3,11 @@
 
     <item android:id="@id/payments"
         android:title="Payments"
-        android:icon="@drawable/credit_card_24"/>
+        android:icon="@drawable/coins"/>
 
     <item android:id="@id/paidDebts"
         android:title="Paid"
-        android:icon="@drawable/ic_confirm_24"/>
+        android:icon="@drawable/checked_64"/>
 
     <item android:id="@id/settings"
         android:title="Settings"

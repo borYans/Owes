@@ -15,6 +15,7 @@ import com.example.owes.utils.OwesSharedPrefs.readFromPrefs
 import com.example.owes.utils.OwesSharedPrefs.saveBooleanToSharedPrefs
 import com.example.owes.utils.OwesSharedPrefs.saveStringToSharedPrefs
 import com.example.owes.utils.classicSnackBar
+import com.example.owes.utils.confirmationSnackBar
 import kotlinx.android.synthetic.main.fragment_settings.*
 import java.util.concurrent.TimeUnit
 
@@ -32,7 +33,7 @@ class Settings : Fragment(R.layout.fragment_settings) {
     }
 
     private fun setUpCurrencyDropDownText() {
-        val currency = readFromPrefs(resources.getString(R.string.CURRENCY), " ")
+        val currency = readFromPrefs(resources.getString(R.string.CURRENCY), resources.getString(R.string.DOLLAR))
         currencyDropdown.setText(currency)
     }
 
@@ -41,7 +42,6 @@ class Settings : Fragment(R.layout.fragment_settings) {
             notificationTogle.isChecked = it
         }
     }
-
     private fun setNotificationWorker() {
             if (notificationTogle.isChecked) {
                  val showNotification = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS).build()
@@ -63,7 +63,7 @@ class Settings : Fragment(R.layout.fragment_settings) {
             saveBooleanToSharedPrefs(NOTIFICATION_STATUS,notificationTogle.isChecked)
             saveStringToSharedPrefs(getString(R.string.CURRENCY),currencyInputLayout.editText?.text.toString())
             Log.d("SETTINGS", "SHARED PREFERENCES: ${readFromPrefs("string", "")}")
-            requireView().classicSnackBar("Done.")
+            requireView().confirmationSnackBar("Done.")
         }
     }
 

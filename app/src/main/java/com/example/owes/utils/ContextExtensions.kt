@@ -1,6 +1,7 @@
 package com.example.owes.utils
 
 import android.content.Context
+import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import com.example.owes.R
@@ -12,4 +13,12 @@ fun Context.toast(message: String) {
 
 fun View.classicSnackBar(message: String) {
     Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
+}
+
+fun View.confirmationSnackBar(message: String) {
+    Snackbar.make(this, message, Snackbar.LENGTH_SHORT).apply {
+        setBackgroundTint(resources.getColor(android.R.color.holo_green_dark))
+        setTextColor(resources.getColor(R.color.white))
+        setActionTextColor(resources.getColor(R.color.white))
+    }.show()
 }

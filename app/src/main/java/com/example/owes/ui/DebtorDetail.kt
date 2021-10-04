@@ -3,6 +3,7 @@ package com.example.owes.ui
 import android.graphics.Color.BLACK
 import android.graphics.Color.WHITE
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -18,6 +19,7 @@ import com.example.owes.data.model.entities.PartialPayment
 import com.example.owes.utils.DateConverter.convertDateToSimpleFormatString
 import com.example.owes.utils.OwesSharedPrefs
 import com.example.owes.utils.OwesSharedPrefs.initSharedPrefs
+import com.example.owes.utils.classicSnackBar
 import com.example.owes.viewmodels.DebtorViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_debtor_detail.*
@@ -126,11 +128,18 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
                     paymentDate = convertDateToSimpleFormatString(Calendar.getInstance().time)
                 }
                 debtorViewModel.updateDebtor(debtor)
+                navigateToPaidScreen()
+            } else {
+                requireView().classicSnackBar(getString(R.string.make_sure_mark_as_paid))
             }
 
-            Navigation.findNavController(requireView())
-                .navigate(DebtorDetailDirections.actionDebtorDetailToPaidDebts())
+
         }
+    }
+
+    private fun navigateToPaidScreen() {
+        Navigation.findNavController(requireView())
+            .navigate(DebtorDetailDirections.actionDebtorDetailToPaidDebts())
     }
 
     private fun checkPaidState() {
@@ -138,16 +147,23 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
             clearRemainingAmount()
             setPaidButtonState()
             setMarkAsPaidButtonState()
+            setPaymentLogoAsPaidState()
             saveButtonDetail.visibility = View.GONE
         } else {
             retrieveRemainingAmount()
         }
     }
 
+    private fun setPaymentLogoAsPaidState() {
+        owesSymbol.setImageDrawable(resources.getDrawable(R.drawable.checked_64))
+    }
+
     private fun setMarkAsPaidButtonState() {
-        markAsPaidBtn.text = "Paid on ${debtor.paymentDate}"
-        markAsPaidBtn.isClickable = false
-        markAsPaidBtn.setBackgroundColor(resources.getColor(R.color.not_available_button))
+        markAsPaidBtn.apply {
+            text = "Paid on ${debtor.paymentDate}"
+            isClickable = false
+            setBackgroundColor(resources.getColor(R.color.not_available_button))
+        }
     }
 
     private fun setUnpaidButtonState() {
@@ -166,8 +182,8 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     private fun retrieveRemainingAmount() {
         remainingMoney = debtor.remainingAmountMoney
         totalPaidMoney = debtor.totalAmountMoney
-        remainingMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${remainingMoney}"
-        totalMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}$totalPaidMoney"
+        remainingMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${String.format("%.2f", remainingMoney).toDouble()}"
+        totalMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${String.format("%.2f", totalPaidMoney).toDouble()}"
     }
 
     private fun listenToMarkAsPaidBtn() {
