@@ -6,10 +6,13 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "debtors")
 data class Debtor(
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "debtor_id")
+    val debtorId: Int? = null,
+
     @ColumnInfo(name = "is_owned")
     val isOwned: Boolean,
 
-    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "debtor_name")
     val personName: String,
 

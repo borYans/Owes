@@ -66,9 +66,11 @@ class PaymentsRecyclerAdapter(
             dueDateText.text = "${context.getString(R.string.due_date)}  ${debtor.dueDate}"
 
             holder.itemView.setOnClickListener{
-                debtorOnClickListener.onDebtorClick(debtor.personName)
-            }
+                debtor.debtorId?.let {
+                    debtorOnClickListener.onDebtorClick(it)
 
+                }
+            }
 
         }
     }

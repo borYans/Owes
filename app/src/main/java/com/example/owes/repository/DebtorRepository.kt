@@ -23,11 +23,17 @@ class DebtorRepository @Inject constructor(private val debtorDao: DebtorDao): De
         }
     }
 
-     fun deleteDebtor(debtor: Debtor)  {
+     fun deleteDebtor(debtorId: Int)  {
          CoroutineScope(Dispatchers.IO).launch {
-             debtorDao.deleteDebtor(debtor)
+             debtorDao.deleteDebtor(debtorId)
          }
      }
+
+    fun deletePpaymentsForDebtor(debtorId: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            debtorDao.deletePPaymentsForDebtor(debtorId)
+        }
+    }
 
     fun deletepPayment(ppayment: PartialPayment)  {
         CoroutineScope(Dispatchers.IO).launch {
@@ -46,10 +52,14 @@ class DebtorRepository @Inject constructor(private val debtorDao: DebtorDao): De
         debtorDao.getAllDebtors()
     }
 
+    fun isDebtorExisting(debtorName:String) = runBlocking {
+        debtorDao.isDebtorExisting(debtorName)
+    }
+
      fun getAllPayments() = debtorDao.getAllUnpaidDebtors()
      fun getAllPaidDebts() = debtorDao.getAllPaidDebtors()
-     fun getSingleDebtor(debtorName: String) = debtorDao.getSingleDebtor(debtorName)
-     fun getPPayments(debtorName: String) = debtorDao.getPPaymentsForDebtor(debtorName)
+     fun getSingleDebtor(debtorId: Int) = debtorDao.getSingleDebtor(debtorId)
+     fun getPPayments(debtorId: Int) = debtorDao.getPPaymentsForDebtor(debtorId)
 
     fun getIncomeMoney(): List<Double> = runBlocking {
         debtorDao.getIncomeAmount()

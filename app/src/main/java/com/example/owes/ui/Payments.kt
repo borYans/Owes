@@ -51,7 +51,8 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position= viewHolder.adapterPosition
                 val debtor = paymentsRecyclerAdapter.differ.currentList[position]
-                debtorViewModel.deletePayment(debtor)
+                debtorViewModel.deletePayment(debtor.debtorId!!)
+                debtorViewModel.deletePpaymentsForExactDebtor(debtor.debtorId!!)
                 askDeleteConfirmation(debtor)
             }
         }
@@ -129,8 +130,7 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
         }
     }
 
-
-    override fun onDebtorClick(debtor_name: String) {
-        Navigation.findNavController(requireView()).navigate(PaymentsDirections.actionPaymentsToDebtorDetail(debtor_name))
+    override fun onDebtorClick(debtorId: Int) {
+        Navigation.findNavController(requireView()).navigate(PaymentsDirections.actionPaymentsToDebtorDetail(debtorId))
     }
 }

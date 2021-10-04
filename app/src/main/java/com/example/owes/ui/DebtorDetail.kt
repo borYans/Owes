@@ -29,7 +29,7 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     private val debtorViewModel: DebtorViewModel by activityViewModels()
     private val partialPaymentRecyclerAdapter = PartialPaymentRecyclerAdapter()
 
-    private var debtorName: String? = null
+    private var debtorId: Int? = null
     private lateinit var debtor: Debtor
     private var isPaidBtnClicked = false
 
@@ -75,7 +75,6 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
 
     }
 
-
     private fun updateDebtor(partialAmount: Double) {
         debtor.apply {
             val total = totalAmountMoney - partialAmount
@@ -107,8 +106,8 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     }
 
     private fun populatePartialPaymentList() {
-        debtorName?.let {
-            debtorViewModel.getPartialPaymentsForDebtor(debtorName!!).observe(viewLifecycleOwner, {
+        debtorId?.let {
+            debtorViewModel.getPartialPaymentsForDebtor(debtorId!!).observe(viewLifecycleOwner, {
                 it?.let {
                     partialPaymentRecyclerAdapter.partialPDiffer.submitList(it)
                 }
@@ -211,14 +210,14 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     private fun getNameFromArgs() {
         arguments?.let {
             val args = DebtorDetailArgs.fromBundle(it)
-            debtorName = args.debtorId
+            debtorId = args.debtorId
         }
     }
 
     private fun listenToPartialPaymentsBtn() {
         partialPaymentBtn.setOnClickListener {
             Navigation.findNavController(requireView())
-                .navigate(DebtorDetailDirections.actionDebtorDetailToPartialPayments(debtorName!!))
+                .navigate(DebtorDetailDirections.actionDebtorDetailToPartialPayments(debtorId!!))
         }
     }
 
@@ -226,7 +225,7 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
     private fun populateDetailScreen() {
         populatePartialPaymentList()
 
-        debtorViewModel.getOneDebtor(debtorName!!).observe(viewLifecycleOwner, {
+        debtorViewModel.getOneDebtor(debtorId!!).observe(viewLifecycleOwner, {
             it?.let {
                 debtor = it
                 totalPaidMoney = it.totalAmountMoney

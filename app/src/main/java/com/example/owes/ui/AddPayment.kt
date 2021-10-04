@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import com.example.owes.R
 import com.example.owes.data.model.entities.Debtor
 import com.example.owes.utils.Constants.SDF_PATTERN
+import com.example.owes.utils.classicSnackBar
 import com.example.owes.viewmodels.DebtorViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_payment.*
@@ -49,20 +50,25 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
 
     private fun listenToSaveButton() {
         saveButton.setOnClickListener {
-            //need to validate first, this is test purpose
-            val debtor = Debtor(
-                oweCheckBox.isChecked,
-                nameInputBox.text.toString(),
-                0.0,    //total paid up to date
-                amountInputBox.text.toString().toDouble(),
-                referenceInputBox.text.toString(),
-                dueDate.toString(),
-                null,
-                false
-            )
+            if (nameInputBox.text.isNullOrEmpty() || amountInputBox.text.isNullOrEmpty() || amountInputBox.text.toString().toDouble() == 0.0  || referenceInputBox.text.isNullOrEmpty() || dueDate.isNullOrEmpty()) {
+                requireView().classicSnackBar("Please provide all information before saving.")
+            } else if(debtorViewModel.isDebtorAlreadyExist(nameInputBox.text.toString().trim()) == 1) {
+                requireView().classicSnackBar("This name already exist. Please provide different name.")
+            } else {
+                val debtor = Debtor(
+                    null,
+                    oweCheckBox.isChecked,
+                    nameInputBox.text.toString(),
+                    0.0,    //total paid up to date
+                    amountInputBox.text.toString().toDouble(),
+                    referenceInputBox.text.toString(),
+                    dueDate.toString(),
+                    null,
+                    false
+                )
                 debtorViewModel.addDebtor(debtor)
-
-           Navigation.findNavController(requireView()).navigate(AddPaymentDirections.actionAddPaymentToPayments())
+                Navigation.findNavController(requireView()).navigate(AddPaymentDirections.actionAddPaymentToPayments())
+            }
         }
     }
 
@@ -71,7 +77,7 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
             val calendar = Calendar.getInstance()
             calendar.set(YEAR, MONTH, DAY)
             dueDate = formatDate(calendar.time)
-            dueDateButton.text = dueDate  //you can format it a little bit better later.
+            dueDateButton.text = dueDate
         }
 
         dueDateButton.setOnClickListener {

@@ -2,7 +2,6 @@ package com.example.owes.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
@@ -18,7 +17,7 @@ import java.util.*
 
 class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
 
-    var debtorName: String? = null
+    var debtorId: Int? = null
     lateinit var debtor: Debtor
     private val debtorViewModel: DebtorViewModel by activityViewModels()
 
@@ -32,7 +31,7 @@ class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
                 null,
                 convertDateToSimpleFormatString(Calendar.getInstance().time),
                 partialAmountMoneyInput.text.toString().toDouble(),
-                debtorName!!
+                debtorId!!
             )
 
             if(debtor.remainingAmountMoney < partialAmountMoneyInput.text.toString().toDouble()) {
@@ -42,13 +41,13 @@ class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
                 debtor.totalAmountMoney += partialAmountMoneyInput.text.toString().toDouble()
                 debtorViewModel.addPartialPayment(pPayment)
                 debtorViewModel.updateDebtor(debtor)
-                Navigation.findNavController(requireView()).navigate(PartialPaymentsDirections.actionPartialPaymentsToDebtorDetail(debtorName!!))
+                Navigation.findNavController(requireView()).navigate(PartialPaymentsDirections.actionPartialPaymentsToDebtorDetail(debtorId!!))
             }
         }
     }
 
     private fun getDebtorObject() {
-        debtorViewModel.getOneDebtor(debtorName!!).observe(viewLifecycleOwner, { deb ->
+        debtorViewModel.getOneDebtor(debtorId!!).observe(viewLifecycleOwner, { deb ->
             deb?.let {
                 debtor = it
             }
@@ -58,7 +57,7 @@ class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
     private fun getDebtorNameFromArgs() {
         arguments?.let {
             val args = PartialPaymentsArgs.fromBundle(it)
-            debtorName = args.debtorName
+            debtorId = args.debtorId
         }
     }
 }

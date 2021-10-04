@@ -53,7 +53,7 @@
         android:label="Debtor Detail" >
         <argument
             android:name="debtor_id"
-            app:argType="string" />
+            app:argType="integer" />
         <action
             android:id="@+id/action_debtorDetail_to_partialPayments"
             app:destination="@id/partialPayments"
@@ -71,8 +71,8 @@
             android:id="@+id/action_partialPayments_to_debtorDetail"
             app:destination="@id/debtorDetail" />
         <argument
-            android:name="debtorName"
-            app:argType="string" />
+            android:name="debtorId"
+            app:argType="integer" />
     </fragment>
 
 </navigation>

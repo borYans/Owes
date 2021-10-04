@@ -37,8 +37,9 @@ class DebtorViewModel @Inject constructor(
 
      fun getAllPayments() = repository.getAllPayments()
      fun getAllPaidDebts() = repository.getAllPaidDebts()
-     fun getOneDebtor(debtorName: String) = repository.getSingleDebtor(debtorName)
-     fun getPartialPaymentsForDebtor(debtorName: String) = repository.getPPayments(debtorName)
+     fun getOneDebtor(debtorId: Int) = repository.getSingleDebtor(debtorId)
+     fun getPartialPaymentsForDebtor(debtorId: Int) = repository.getPPayments(debtorId)
+     fun isDebtorAlreadyExist(debtorName: String) = repository.isDebtorExisting(debtorName)
 
 
     private fun getIncomeMoneyAmount() = sumMoney(repository.getIncomeMoney())
@@ -66,8 +67,9 @@ class DebtorViewModel @Inject constructor(
     }
 
 
-    fun deletePayment(debtor: Debtor) = repository.deleteDebtor(debtor)
+    fun deletePayment(debtorId: Int) = repository.deleteDebtor(debtorId)
     fun deletePPayment(partialPay: PartialPayment) = repository.deletepPayment(partialPay)
+    fun deletePpaymentsForExactDebtor(debtorId: Int) = repository.deletePpaymentsForDebtor(debtorId)
 
 
 
