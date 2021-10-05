@@ -146,11 +146,12 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:drawableEnd="@drawable/coins_24"
+            android:fontFamily="sans-serif"
             android:gravity="start|center"
             android:padding="6dp"
             android:text="Partial payment"
-            android:fontFamily="sans-serif"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />

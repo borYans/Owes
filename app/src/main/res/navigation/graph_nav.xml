@@ -62,6 +62,9 @@
             android:id="@+id/action_debtorDetail_to_paidDebts"
             app:destination="@id/paidDebts"
             app:enterAnim="@android:anim/slide_in_left" />
+        <action
+            android:id="@+id/action_debtorDetail_to_editDebtor"
+            app:destination="@id/editDebtor" />
     </fragment>
     <fragment
         android:id="@+id/partialPayments"
@@ -72,6 +75,20 @@
             app:destination="@id/debtorDetail" />
         <argument
             android:name="debtorId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/editDebtor"
+        android:name="com.example.owes.ui.EditDebtor"
+        android:label="EditDebtor" >
+        <action
+            android:id="@+id/action_editDebtor_to_debtorDetail"
+            app:destination="@id/debtorDetail" />
+        <argument
+            android:name="debtor_id"
+            app:argType="integer" />
+        <argument
+            android:name="remainingMoney"
             app:argType="integer" />
     </fragment>
 

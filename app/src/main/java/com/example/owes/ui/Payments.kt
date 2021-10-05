@@ -39,7 +39,7 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
         listenToAddNewPaymentClick()
         showAllPayments()
 
-        val itemTouchHelpeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
+        val itemTouchHelpeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -49,13 +49,14 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position= viewHolder.adapterPosition
+                val position = viewHolder.adapterPosition
                 val debtor = paymentsRecyclerAdapter.differ.currentList[position]
                 debtorViewModel.deletePayment(debtor.debtorId!!)
-                debtorViewModel.deletePpaymentsForExactDebtor(debtor.debtorId!!)
+                debtorViewModel.deletePpaymentsForExactDebtor(debtor.debtorId)
                 askDeleteConfirmation(debtor)
             }
         }
+
 
         val itemTouchHelper = ItemTouchHelper(itemTouchHelpeCallback)
         itemTouchHelper.attachToRecyclerView(paymentsRecyclerView)

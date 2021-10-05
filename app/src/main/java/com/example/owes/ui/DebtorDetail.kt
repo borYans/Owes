@@ -46,11 +46,12 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
         setUpRecyclerView()
         getNameFromArgs()
 
-
         populateDetailScreen()
         listenToPartialPaymentsBtn()
         listenToMarkAsPaidBtn()
         listenToSaveBtn()
+
+        navigateToEditDebtorScreen()
 
 
         val itemTouchHelpeCallback =
@@ -71,10 +72,16 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
                     askDeleteConfirmation(payment)
                 }
             }
-
         val itemTouchHelper = ItemTouchHelper(itemTouchHelpeCallback)
         itemTouchHelper.attachToRecyclerView(partialPaymentRecycler)
+    }
 
+    private fun navigateToEditDebtorScreen() {
+        debtorNameTxtDetail.setOnClickListener {
+            debtorId?.let {
+                Navigation.findNavController(requireView()).navigate(DebtorDetailDirections.actionDebtorDetailToEditDebtor(it, remainingMoney.toInt()))
+            }
+        }
     }
 
     private fun updateDebtor(partialAmount: Double) {
