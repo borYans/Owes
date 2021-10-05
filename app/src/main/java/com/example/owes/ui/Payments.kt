@@ -57,7 +57,6 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
             }
         }
 
-
         val itemTouchHelper = ItemTouchHelper(itemTouchHelpeCallback)
         itemTouchHelper.attachToRecyclerView(paymentsRecyclerView)
     }

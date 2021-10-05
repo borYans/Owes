@@ -27,22 +27,28 @@ class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
         getDebtorObject()
 
         savePartialBtn.setOnClickListener {
-            val pPayment = PartialPayment(
-                null,
-                convertDateToSimpleFormatString(Calendar.getInstance().time),
-                partialAmountMoneyInput.text.toString().toDouble(),
-                debtorId!!
-            )
-
-            if(debtor.remainingAmountMoney < partialAmountMoneyInput.text.toString().toDouble()) {
-                requireView().classicSnackBar("You have exceeded the limit of the remaining amount.")
+            if(partialAmountMoneyInput.text.isNullOrEmpty() || partialAmountMoneyInput.text.toString().toDouble() == 0.0){
+                requireView().classicSnackBar("Money amount is mandatory.")
             } else {
-                debtor.remainingAmountMoney -= partialAmountMoneyInput.text.toString().toDouble()
-                debtor.totalAmountMoney += partialAmountMoneyInput.text.toString().toDouble()
-                debtorViewModel.addPartialPayment(pPayment)
-                debtorViewModel.updateDebtor(debtor)
-                Navigation.findNavController(requireView()).navigate(PartialPaymentsDirections.actionPartialPaymentsToDebtorDetail(debtorId!!))
+                val pPayment = PartialPayment(
+                    null,
+                    convertDateToSimpleFormatString(Calendar.getInstance().time),
+                    partialAmountMoneyInput.text.toString().toDouble(),
+                    debtorId!!
+                )
+
+                if(debtor.remainingAmountMoney < partialAmountMoneyInput.text.toString().toDouble()) {
+                    requireView().classicSnackBar("You have exceeded the limit of the remaining amount.")
+                } else {
+                    debtor.remainingAmountMoney -= partialAmountMoneyInput.text.toString().toDouble()
+                    debtor.totalAmountMoney += partialAmountMoneyInput.text.toString().toDouble()
+                    debtorViewModel.addPartialPayment(pPayment)
+                    debtorViewModel.updateDebtor(debtor)
+                    Navigation.findNavController(requireView()).navigate(PartialPaymentsDirections.actionPartialPaymentsToDebtorDetail(debtorId!!))
+                }
             }
+
+
         }
     }
 

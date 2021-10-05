@@ -54,7 +54,9 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
                 requireView().classicSnackBar("Please provide all information before saving.")
             } else if(debtorViewModel.isDebtorAlreadyExist(nameInputBox.text.toString().trim()) == 1) {
                 requireView().classicSnackBar("This name already exist. Please provide different name.")
-            } else {
+            } else if (amountInputBox.text.toString().toDouble() > 100000) {
+                requireView().classicSnackBar("Amount limit is 100k.")
+            }  else {
                 val debtor = Debtor(
                     null,
                     oweCheckBox.isChecked,
