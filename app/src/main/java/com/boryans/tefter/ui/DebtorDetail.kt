@@ -267,7 +267,11 @@ class DebtorDetail : Fragment(R.layout.fragment_debtor_detail) {
                 totalMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${String.format("%.2f", debtor.totalAmountMoney).toDouble()}"
                 remainingMoneyDetail.text = "${OwesSharedPrefs.readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${String.format("%.2f", debtor.remainingAmountMoney).toDouble()}"
             }
-            if (!it.isPayed) listenToSwipeDelete()
+            if (!it.isPayed) listenToSwipeDelete() else {
+                debtorNameTxtDetail.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, 0)
+                debtorNameTxtDetail.isEnabled = false
+            }
+
         })
     }
 
