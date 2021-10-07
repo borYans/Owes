@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/payments"
-        android:name="com.example.owes.ui.Payments"
+        android:name="com.boryans.tefter.ui.Payments"
         android:label="Payments"
         tools:layout="@layout/fragment_payments" >
         <action
@@ -27,12 +27,16 @@
 
     <fragment
         android:id="@+id/settings"
-        android:name="com.example.owes.ui.Settings"
+        android:name="com.boryans.tefter.ui.Settings"
         android:label="Settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settings_to_payments"
+            app:destination="@id/payments" />
+    </fragment>
     <fragment
         android:id="@+id/addPayment"
-        android:name="com.example.owes.ui.AddPayment"
+        android:name="com.boryans.tefter.ui.AddPayment"
         android:label="Add payment"
         tools:layout="@layout/fragment_add_payment" >
         <action
@@ -41,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/paidDebts"
-        android:name="com.example.owes.ui.PaidDebts"
+        android:name="com.boryans.tefter.ui.PaidDebts"
         android:label="Paid Debts" >
         <action
             android:id="@+id/action_paidDebts_to_debtorDetail"
@@ -49,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/debtorDetail"
-        android:name="com.example.owes.ui.DebtorDetail"
+        android:name="com.boryans.tefter.ui.DebtorDetail"
         android:label="Debtor Detail" >
         <argument
             android:name="debtor_id"
@@ -68,7 +72,7 @@
     </fragment>
     <fragment
         android:id="@+id/partialPayments"
-        android:name="com.example.owes.ui.PartialPayments"
+        android:name="com.boryans.tefter.ui.PartialPayments"
         android:label="Partial Payment" >
         <action
             android:id="@+id/action_partialPayments_to_debtorDetail"
@@ -79,7 +83,7 @@
     </fragment>
     <fragment
         android:id="@+id/editDebtor"
-        android:name="com.example.owes.ui.EditDebtor"
+        android:name="com.boryans.tefter.ui.EditDebtor"
         android:label="EditDebtor" >
         <action
             android:id="@+id/action_editDebtor_to_debtorDetail"

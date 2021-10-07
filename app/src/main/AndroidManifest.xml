@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.owes">
+    package="com.boryans.tefter">
 
     <application
-        android:name=".application.MyApplication"
+        android:name="com.boryans.tefter.application.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_tefter_final"
         android:label="@string/app_name"
@@ -19,7 +19,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.boryans.tefter.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
