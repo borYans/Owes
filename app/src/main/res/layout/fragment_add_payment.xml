@@ -78,7 +78,7 @@
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Who paid"
@@ -91,7 +91,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameInputBox"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/check_box_background"
@@ -103,7 +103,7 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Reference"
@@ -116,7 +116,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/referenceInputBox"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/check_box_background"
@@ -128,7 +128,7 @@
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Amount"
@@ -141,7 +141,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/amountInputBox"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/check_box_background"

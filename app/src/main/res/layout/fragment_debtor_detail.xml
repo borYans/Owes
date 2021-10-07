@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="18dp"
+        android:padding="12dp"
         tools:context=".ui.DebtorDetail">
 
         <androidx.cardview.widget.CardView
@@ -27,7 +27,7 @@
 
                 <ImageView
                     android:id="@+id/owesSymbol"
-                    android:layout_width="80dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="22dp"
                     android:scaleType="centerCrop"
@@ -45,6 +45,7 @@
             android:layout_marginStart="32dp"
             android:fontFamily="sans-serif"
             android:text="Boris"
+            android:drawableEnd="@drawable/ic_baseline_edit_24"
             android:textColor="@color/main_background_color"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -57,7 +58,6 @@
             android:id="@+id/referenceDetailTxt"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="sans-serif"
             android:text="This person owes you"
@@ -70,11 +70,11 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/check_box_background"
-            android:backgroundTint="@color/main_background_color"
+            android:backgroundTint="@color/debtor_detail_dashboard"
             android:padding="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,11 +146,12 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
-            android:gravity="start|center"
-            android:text="Make a partial payment"
-            android:textAllCaps="false"
+            android:layout_marginTop="8dp"
+            android:drawableEnd="@drawable/coins_24"
             android:fontFamily="sans-serif"
+            android:gravity="start|center"
+            android:padding="6dp"
+            android:text="Partial payment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
@@ -160,11 +161,12 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_confirm_24"
+            android:drawableEnd="@drawable/checked_24"
             android:drawableTint="@color/main_background_color"
-            android:gravity="start|center"
-            android:text="Mark as paid"
             android:fontFamily="sans-serif"
+            android:gravity="start|center"
+            android:padding="8dp"
+            android:text="Mark as paid"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/partialPaymentBtn" />
@@ -178,6 +180,7 @@
             android:enabled="false"
             android:textStyle="bold"
             android:textSize="12sp"
+            android:textColor="@color/white"
             app:backgroundTint="@color/unavailable_save_button_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

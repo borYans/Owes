@@ -15,7 +15,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.example.owes"
+        applicationId "com.boryans.tefter"
         minSdk 21
         targetSdk 31
         versionCode 1
