@@ -41,7 +41,9 @@
         tools:layout="@layout/fragment_add_payment" >
         <action
             android:id="@+id/action_addPayment_to_payments"
-            app:destination="@id/payments" />
+            app:destination="@id/payments"
+            app:popUpTo="@+id/addPayment"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/paidDebts"
@@ -87,7 +89,9 @@
         android:label="EditDebtor" >
         <action
             android:id="@+id/action_editDebtor_to_debtorDetail"
-            app:destination="@id/debtorDetail" />
+            app:destination="@id/debtorDetail"
+            app:popUpTo="@+id/editDebtor"
+            app:popUpToInclusive="true"/>
         <argument
             android:name="debtor_id"
             app:argType="integer" />

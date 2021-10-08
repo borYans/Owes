@@ -11,6 +11,9 @@ import com.boryans.tefter.data.model.entities.PartialPayment
 import com.boryans.tefter.utils.DateConverter.convertDateToSimpleFormatString
 import com.boryans.tefter.utils.classicSnackBar
 import com.boryans.tefter.viewmodels.DebtorViewModel
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import kotlinx.android.synthetic.main.fragment_add_payment.*
 import kotlinx.android.synthetic.main.fragment_partial_payments.*
 import java.util.*
 
@@ -23,6 +26,7 @@ class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initializeAdMobAds()
         getDebtorNameFromArgs()
         getDebtorObject()
 
@@ -50,6 +54,12 @@ class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
 
 
         }
+    }
+
+    private fun initializeAdMobAds() {
+        MobileAds.initialize(requireContext()) {}
+        val adRequest = AdRequest.Builder().build()
+        adViewPartialPayments.loadAd(adRequest)
     }
 
     private fun getDebtorObject() {

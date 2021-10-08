@@ -12,8 +12,11 @@ import com.boryans.tefter.data.model.entities.Debtor
 import com.boryans.tefter.utils.Constants.SDF_PATTERN
 import com.boryans.tefter.utils.classicSnackBar
 import com.boryans.tefter.viewmodels.DebtorViewModel
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_add_payment.*
+import kotlinx.android.synthetic.main.fragment_payments.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,11 +29,18 @@ class AddPayment : Fragment(R.layout.fragment_add_payment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initializeAdMobAds()
         setInitialCheckBoxesState()
         handleCheckBoxClicks()
         listenForCalendarInput()
 
         listenToSaveButton()
+    }
+
+    private fun initializeAdMobAds() {
+        MobileAds.initialize(requireContext()) {}
+        val adRequest = AdRequest.Builder().build()
+        adViewAddPayment.loadAd(adRequest)
     }
 
     private fun setInitialCheckBoxesState() {

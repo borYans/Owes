@@ -14,7 +14,10 @@ import com.boryans.tefter.data.adapters.PaymentsRecyclerAdapter
 import com.boryans.tefter.data.model.entities.Debtor
 import com.boryans.tefter.utils.DebtorOnClickListener
 import com.boryans.tefter.viewmodels.DebtorViewModel
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_add_payment.*
 import kotlinx.android.synthetic.main.fragment_paid_debts.*
 
 
@@ -25,6 +28,7 @@ class PaidDebts : Fragment(R.layout.fragment_paid_debts), DebtorOnClickListener 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initializeAdMobAds()
         initalizeAdapter()
         showAllPaidDebts()
 
@@ -41,7 +45,7 @@ class PaidDebts : Fragment(R.layout.fragment_paid_debts), DebtorOnClickListener 
                 val position= viewHolder.adapterPosition
                 val debtor = paymentsRecyclerAdapter.differ.currentList[position]
                 debtorViewModel.deletePayment(debtor.debtorId!!)
-                debtorViewModel.deletePpaymentsForExactDebtor(debtor.debtorId!!)
+                debtorViewModel.deletePpaymentsForExactDebtor(debtor.debtorId)
                 askDeleteConfirmation(debtor)
             }
         }
@@ -50,6 +54,13 @@ class PaidDebts : Fragment(R.layout.fragment_paid_debts), DebtorOnClickListener 
         itemTouchHelper.attachToRecyclerView(paidRecyclerView)
 
     }
+
+    private fun initializeAdMobAds() {
+        MobileAds.initialize(requireContext()) {}
+        val adRequest = AdRequest.Builder().build()
+        adViewPaidPayments.loadAd(adRequest)
+    }
+
 
     private fun showAllPaidDebts() {
         debtorViewModel.getAllPaidDebts().observe(viewLifecycleOwner, { paidDebts ->

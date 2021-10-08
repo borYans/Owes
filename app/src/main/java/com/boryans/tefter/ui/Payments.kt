@@ -118,7 +118,7 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
     private fun initializeAdMobAds() {
         MobileAds.initialize(requireContext()) {}
         val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
+        adViewPayments.loadAd(adRequest)
     }
 
     private fun initializeAdapter() {

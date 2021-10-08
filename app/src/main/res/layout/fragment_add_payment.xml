@@ -34,7 +34,6 @@
                     android:checked="true"
                     android:text="Owed"
                     android:textAlignment="center"
-                    android:textColor="@color/main_background_color"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -66,7 +65,6 @@
                     android:layout_height="wrap_content"
                     android:text="Owe"
                     android:textAlignment="center"
-                    android:textColor="@color/main_background_color"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -164,7 +162,7 @@
                 android:padding="10dp"
                 android:text="Due date"
                 android:textColor="@color/main_background_color"
-                app:layout_constraintBottom_toTopOf="@+id/saveButton"
+                app:layout_constraintBottom_toTopOf="@+id/adViewAddPayment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/amountInputBox" />
@@ -192,6 +190,17 @@
                 android:textStyle="bold"
                 app:backgroundTint="@color/main_background_color"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adViewAddPayment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:adSize="BANNER"
+                app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+                app:layout_constraintBottom_toTopOf="@+id/saveButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
