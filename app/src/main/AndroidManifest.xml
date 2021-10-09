@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Owes">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="ca-app-pub-7855259694860806~8128817282"/> //real app id
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
