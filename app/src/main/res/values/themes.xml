@@ -3,7 +3,6 @@
     <style name="Theme.Owes" parent="Theme.MaterialComponents.Light.DarkActionBar">
 
         <!-- Primary brand color. -->
-        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="colorPrimary">@color/main_background_color</item>
         <item name="colorPrimaryVariant">@color/main_background_color</item>
         <item name="colorOnPrimary">@color/white</item>

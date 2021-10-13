@@ -14,4 +14,8 @@
     <color name="debtor_detail_dashboard">#1E1D1D</color>
     <color name="not_available_button">#9F669900</color>
 
+    //dark theme colors
+    <color name="background_grey">#121212</color>
+
+
 </resources>
