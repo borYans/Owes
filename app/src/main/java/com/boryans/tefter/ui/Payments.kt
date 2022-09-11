@@ -75,29 +75,39 @@ class Payments : Fragment(R.layout.fragment_payments), DebtorOnClickListener {
 
 
     private fun showTotalMoney() {
-        debtorViewModel.calculateTotal().observe(viewLifecycleOwner, { money ->
+        debtorViewModel.calculateTotal().observe(viewLifecycleOwner) { money ->
             money?.let {
                 if (money.containsKey(POSITIVE_NUMBER)) {
                     sumOfMoneyAmount.setTextColor(context?.resources?.getColor(android.R.color.holo_green_dark)!!)
-                    sumOfMoneyAmount.text = "+${readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${String.format("%.2f", money.getValue(POSITIVE_NUMBER))}"
+                    sumOfMoneyAmount.text = "+${
+                        readFromPrefs(
+                            getString(R.string.CURRENCY),
+                            getString(R.string.DOLLAR)
+                        )
+                    }${String.format("%.2f", money.getValue(POSITIVE_NUMBER))}"
                 }
 
                 if (money.containsKey(NEGATIVE_NUMBER)) {
                     sumOfMoneyAmount.setTextColor(context?.resources?.getColor(android.R.color.holo_red_dark)!!)
-                    sumOfMoneyAmount.text = "-${readFromPrefs(getString(R.string.CURRENCY), getString(R.string.DOLLAR))}${String.format("%.2f", money.getValue(NEGATIVE_NUMBER))}"
+                    sumOfMoneyAmount.text = "-${
+                        readFromPrefs(
+                            getString(R.string.CURRENCY),
+                            getString(R.string.DOLLAR)
+                        )
+                    }${String.format("%.2f", money.getValue(NEGATIVE_NUMBER))}"
                 }
             }
-        })
+        }
     }
 
     private fun showAllPayments() {
-        debtorViewModel.getAllPayments().observe(viewLifecycleOwner, { debtors ->
-           debtors?.let {
-               validatePaymentsList(it)
-               paymentsRecyclerAdapter.differ.submitList(it)
-               showTotalMoney()
-           }
-       })
+        debtorViewModel.getAllPayments().observe(viewLifecycleOwner) { debtors ->
+            debtors?.let {
+                validatePaymentsList(it)
+                paymentsRecyclerAdapter.differ.submitList(it)
+                showTotalMoney()
+            }
+        }
     }
 
     private fun validatePaymentsList(it: List<Debtor>) {

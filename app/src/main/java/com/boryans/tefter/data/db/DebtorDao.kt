@@ -45,10 +45,8 @@ interface DebtorDao {
      @Query("DELETE FROM partial_payment WHERE debtorId = :debtorId")
      fun deletePPaymentsForDebtor(debtorId: Int)
 
-
     @Update
     suspend fun updateDebtor(debtor: Debtor)
-
 
     @Delete
     suspend fun deletePartialPayment(partialPay: PartialPayment)

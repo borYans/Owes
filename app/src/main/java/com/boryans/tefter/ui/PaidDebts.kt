@@ -52,12 +52,12 @@ class PaidDebts : Fragment(R.layout.fragment_paid_debts), DebtorOnClickListener 
     }
 
     private fun showAllPaidDebts() {
-        debtorViewModel.getAllPaidDebts().observe(viewLifecycleOwner, { paidDebts ->
+        debtorViewModel.getAllPaidDebts().observe(viewLifecycleOwner) { paidDebts ->
             paidDebts?.let {
                 validatePaidDebts(it)
                 paymentsRecyclerAdapter.differ.submitList(paidDebts)
             }
-        })
+        }
     }
 
     private fun validatePaidDebts(paidDebts:List<Debtor>) {

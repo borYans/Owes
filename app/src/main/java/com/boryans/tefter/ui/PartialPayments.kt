@@ -53,11 +53,11 @@ class PartialPayments : Fragment(R.layout.fragment_partial_payments) {
     }
 
     private fun getDebtorObject() {
-        debtorViewModel.getOneDebtor(debtorId!!).observe(viewLifecycleOwner, { deb ->
+        debtorViewModel.getOneDebtor(debtorId!!).observe(viewLifecycleOwner) { deb ->
             deb?.let {
                 debtor = it
             }
-        })
+        }
     }
 
     private fun getDebtorNameFromArgs() {

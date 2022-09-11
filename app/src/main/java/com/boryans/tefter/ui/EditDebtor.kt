@@ -70,7 +70,7 @@ class EditDebtor : Fragment(R.layout.fragment_edit_debtor_detail) {
 
     private fun getDebtorFromDb() {
         debtorID?.let {
-            debtorViewModel.getOneDebtor(it).observe(viewLifecycleOwner, { debtor ->
+            debtorViewModel.getOneDebtor(it).observe(viewLifecycleOwner) { debtor ->
                 debtor?.let {
                     owedCheckBoxEdit.isChecked = debtor.isOwned
                     nameInputBoxEdit.setText(debtor.personName)
@@ -83,7 +83,7 @@ class EditDebtor : Fragment(R.layout.fragment_edit_debtor_detail) {
                     }
                     dueDateButtonEdit.text = debtor.dueDate
                 }
-            })
+            }
         }
     }
 
