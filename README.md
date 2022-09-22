@@ -4,3 +4,4 @@ Personal Debt Manager app where you can save how much money you owes to someone 
 - Room library
 - MVVM
 - LiveData
+- Notifications
