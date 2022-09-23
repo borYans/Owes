@@ -38,13 +38,7 @@ class DebtorViewModel @Inject constructor(
   private fun getIncomeMoneyAmount() = sumMoney(repository.getIncomeMoney())
   private fun getOutcomeMoneyAmount() = sumMoney(repository.getOutcomeMoney())
 
-  private fun sumMoney(list: List<Double>): Double {
-    var sum = 0.0
-    list.forEach {
-      sum += it
-    }
-    return sum
-  }
+  private fun sumMoney(list: List<Double>) = list.sum()
 
   fun calculateTotal(): LiveData<Map<String, Double>> {
     val positiveNumber = getIncomeMoneyAmount() - getOutcomeMoneyAmount()
@@ -55,10 +49,8 @@ class DebtorViewModel @Inject constructor(
     } else {
       _payments.postValue(mapOf(NEGATIVE_NUMBER to (negativeNumber)))
     }
-
     return _payments
   }
-
 
   fun deletePayment(debtorId: Int) = repository.deleteDebtor(debtorId)
   fun deletePPayment(partialPay: PartialPayment) = repository.deletepPayment(partialPay)

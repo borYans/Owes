@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initSharedPrefs(applicationContext)
 
-
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val navController = findNavController(R.id.fragmentContainerView)
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.payments, R.id.paidDebts, R.id.settings, R.id.debtorDetail, R.id.partialPayments, R.id.addPayment, R.id.editDebtor))
